@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MediPoint - User Directory</title>
+    <link rel="stylesheet" href="system-base.css">
+    <link rel="stylesheet" href="doctor-portal.css">
+    <link rel="stylesheet" href="doctor-monitoring.css">
+  </head>
+  <body class="doctor-portal-page">
+    <div class="portal-shell">
+      <aside class="side-panel" aria-label="Clinical portal navigation">
+        <a href="doctor-portal.html" class="brand-block">
+          <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo">
+        </a>
+        <div class="side-user">
+          <div class="avatar" data-staff-initials>MD</div>
+          <div>
+            <strong data-staff-name>Clinical Staff</strong>
+            <span>Doctor</span>
+          </div>
+        </div>
+        <nav class="side-nav">
+          <a href="doctor-portal.html">
+            <span>OV</span>
+            Clinical Overview
+          </a>
+          <a href="doctor-users.html" class="active">
+            <span>LU</span>
+            List of Users
+          </a>
+          <a href="doctor-analytics.html">
+            <span>AN</span>
+            Analytics
+          </a>
+          <a href="doctor-histogram.html">
+            <span>HG</span>
+            User Histogram
+          </a>
+        </nav>
+        <div class="side-footer">
+          <span>Privacy reminder</span>
+          <strong>Access patient records only for clinical purposes.</strong>
+        </div>
+      </aside>
+      <div class="portal-content">
+        <header class="portal-header">
+          <div>
+            <p>Clinical Monitoring</p>
+            <h1>List of Users</h1>
+          </div>
+          <div class="header-actions">
+            <span class="staff-badge">Staff-only workspace</span>
+            <span data-today>Today</span>
+            <button class="home-btn" type="button" data-logout>Logout</button>
+          </div>
+        </header>
+        <main class="dashboard monitor-grid">
+          <section class="monitor-stats">
+            <article class="monitor-stat">
+              <span>Registered users</span>
+              <strong id="totalUsers">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>With assessments</span>
+              <strong id="activeUsers">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>Total assessments</span>
+              <strong id="totalAssessments">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>Urgent users</span>
+              <strong id="urgentUsers">0</strong>
+            </article>
+          </section>
+          <section class="monitor-panel">
+            <div class="monitor-toolbar">
+              <div>
+                <h2>User Directory</h2>
+                <p>Registered students and personnel with their latest monitoring status.</p>
+              </div>
+              <label>
+                <span class="visually-hidden">Search users</span>
+                <input id="userDirectorySearch" type="search" placeholder="Search name, ID, or role">
+              </label>
+            </div>
+            <div class="table-wrap">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Role</th>
+                    <th>Program / Department</th>
+                    <th>Assessments</th>
+                    <th>Last check-in</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="userRows">
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="../login-pages/medipoint-config.js"></script>
+    <script src="../shared.js"></script>
+    <script src="../login-pages/kiosk-api.js"></script>
+    <script src="doctor-monitoring.js"></script>
+  </body>
+
+</html>

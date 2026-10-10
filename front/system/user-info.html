@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - User Information</title>
+  <link rel="stylesheet" href="system-base.css" />
+  <link rel="stylesheet" href="user-info.css" />
+</head>
+
+<body>
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Portal navigation">
+      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+        <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="userInitials">GU</div>
+        <div>
+          <strong id="userShort">Guest User</strong>
+          <span id="sideRole">Profile setup</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="portal.html"><span>OV</span> Overview</a>
+        <a href="profile.html"><span>MP</span> My Profile</a>
+        <a href="results.html"><span>LR</span> Latest Results</a>
+        <a href="assessment.html"><span>AS</span> Assessment</a>
+        <a href="history.html"><span>HI</span> History</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Required step</span>
+        <strong>Complete your profile first</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Tracking Portal</p>
+          <h1>User Information</h1>
+        </div>
+
+        <div class="header-actions">
+          <span id="todayStamp">Today</span>
+          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+        </div>
+      </header>
+
+      <main class="dashboard setup-dashboard">
+        <section class="hero">
+          <div>
+            <p>Before you continue</p>
+            <h2>Complete your user profile</h2>
+            <span>Your information will be saved to My Profile and used to connect your kiosk records to the correct account.</span>
+          </div>
+        </section>
+
+        <section class="setup-panel">
+         <form id="userInfoForm" class="setup-form">
+
+    <!-- ================= PERSONAL INFORMATION ================= -->
+
+    <section class="form-section">
+
+        <h3>Personal Information</h3>
+        <div class="form-grid">
+
+            <!-- Full Name -->
+            <label>
+                <span>Full Name *</span>
+                <input type="text" id="setupName" name="name" autocomplete="name" required>
+            </label>
+
+            <!-- Role -->
+            <label>
+                <span>Role *</span>
+
+                <select id="setupRole" disabled>
+                    <option value="student">Student</option>
+                    <option value="personnel">Personnel</option>
+                </select>
+
+                <input
+                    type="hidden" id="setupRoleValue" name="role" value="student"
+                >
+            </label>
+
+            <!-- Program -->
+            <label>
+                <span>Program / Department</span>
+                <input
+                    type="text" id="setupDepartment"  name="department"
+                >
+            </label>
+
+            <!-- ID -->
+            <label>
+                <span>ID Number *</span>
+                <input
+                    type="text" id="setupId" name="idNumber" required
+                >
+            </label>
+
+            <!-- Email -->
+            <label>
+                <span>Email Address *</span>
+                <input
+                    type="email" id="setupEmail" name="email" autocomplete="email" required
+                >
+            </label>
+
+            <label>
+                <span>Birthday</span>
+                <input type="date" id="setupBirthday" name="birthday">
+            </label>
+
+            <label>
+                <span>Gender</span>
+                <select id="setupGender" name="gender">
+                    <option value="">Select gender</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+            </label>
+
+            <label>
+                <span>Mobile Number *</span>
+                <input type="tel" id="setupPhone" name="phone" autocomplete="tel" required>
+            </label>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= EMERGENCY CONTACT ================= -->
+
+    <section class="form-section">
+
+        <h3>Emergency Contact</h3>
+
+        <div class="form-grid">
+
+            <label>
+
+                <span>Guardian Name *</span>
+
+                <input
+                    type="text" id="setupEmergency" name="emergencyContact" required
+                >
+            </label>
+
+            <label>
+                <span>Relationship *</span>
+                <input
+                    type="text" id="guardianRelationship" name="guardianRelationship" required
+                >
+            </label>
+
+            <label>
+                <span>Contact Number *</span>
+                <input
+                    type="tel" id="setupEmergencyPhone" name="emergencyPhone" required
+                >
+            </label>
+        </div>
+    </section>
+
+    <!-- ================= PERMANENT ADDRESS ================= -->
+
+    <section class="form-section">
+
+        <h3>Permanent Address</h3>
+        <div class="form-grid">
+            <label>
+                <span>Barangay</span>
+                <input
+                    type="text" id="setupBarangay" name="barangay"
+                >
+            </label>
+
+            <label>
+                <span>Municipality / City</span>
+                <input
+                    type="text" id="setupCity" name="city"
+                >
+            </label>
+
+            <label>
+                <span>Province</span>
+                <input
+                    type="text" id="setupProvince" name="province"
+                >
+            </label>
+        </div>
+    </section>
+
+    <!-- ================= PRESENT ADDRESS ================= -->
+
+    <section class="form-section">
+
+        <h3>Present Address</h3>
+        <div class="form-grid">
+            <label>
+                <span>Barangay</span>
+                <input
+                    type="text" id="presentBarangay" name="presentBarangay"
+                >
+            </label>
+
+            <label>
+                <span>Municipality / City</span>
+                <input
+                    type="text" id="presentCity" name="presentCity"
+                >
+            </label>
+
+            <label>
+                <span>Province</span>
+
+                <input
+                    type="text" id="presentProvince" name="presentProvince"
+                >
+            </label>
+        </div>
+    </section>
+
+    <!-- ================= MEDICAL HISTORY ================= -->
+
+  <section class="form-section">
+  <div class="form-section-header">
+    <div>
+      <h3>Past Medical History</h3>
+      <p>Select all medical conditions that apply to you.</p>
+    </div>
+  </div>
+
+  <fieldset class="medical-history-group">
+    <legend>Check all that apply</legend>
+
+    <div class="checkbox-grid">
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Vertigo" />
+        <span>Vertigo</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Anemia" />
+        <span>Anemia</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Migraine" />
+        <span>Migraine</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Asthma" />
+        <span>Asthma</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Stroke" />
+        <span>Stroke</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Near Sightedness" />
+        <span>Near Sightedness</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Far Sightedness" />
+        <span>Far Sightedness</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Appendicitis" />
+        <span>Appendicitis</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="PCOS" />
+        <span>PCOS</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Recurrent UTI" />
+        <span>Recurrent UTI</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Kidney Stone" />
+        <span>Kidney Stone</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Diabetes" />
+        <span>Diabetes</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Hypothyroidism" />
+        <span>Hypothyroidism</span>
+      </label>
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Hyperthyroidism" />
+        <span>Hyperthyroidism</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Cataract" />
+        <span>Cataract</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Mental health condition"
+        />
+        <span>Mental Health Condition</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Allergy"
+        />
+        <span>Allergies</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Previous surgery"
+        />
+        <span>Previous Surgery</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Seizure/Convulsions"
+        />
+        <span>Seizure/Convulsions</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" name="medicalHistory" value="Menstrual Problems"
+        />
+        <span>Menstrual Problems</span>
+      </label>
+
+      <label class="checkbox-option">
+        <input
+          type="checkbox" id="medicalHistoryNone" name="medicalHistory" value="None"
+        />
+        <span>None</span>
+      </label>
+    </div>
+
+    <label class="medical-details">
+      <span>Other medical condition</span>
+      <input
+        type="text"
+        id="otherMedicalHistory"
+        name="otherMedicalHistory"
+        placeholder="Specify other medical condition"
+      />
+    </label>
+
+    <label class="medical-details">
+      <span>Previous Surgeries</span>
+      <input
+        type="text"
+        id="previousSurgeries"
+        name="previousSurgeries"
+        placeholder="Specify previous surgeries procedures"
+      />
+    </label>
+
+      <label class="medical-details">
+      <span>Date of previous surgeries</span>
+      <input
+        type="text"
+        id="previousSurgeryDate"
+        name="previousSurgeryDate"
+        placeholder="Specify date of previous surgeries"
+      />
+    </label>
+
+    <label class="medical-details">
+      <span>Current medications</span>
+      <textarea
+        id="currentMedications"
+        name="currentMedications"
+        rows="3"
+        placeholder="List any medicines you are currently taking"
+      ></textarea>
+    </label>
+
+    <label class="medical-details">
+      <span>Known allergies</span>
+      <textarea
+        id="knownAllergies"
+        name="knownAllergies"
+        rows="3"
+        placeholder="List food, medicine, or environmental allergies"
+      ></textarea>
+    </label>
+  </fieldset>
+  </section>
+
+
+    <p class="setup-notice" id="setupNotice">
+      All fields marked with * are required before opening the tracking system.
+    </p>
+
+    <div class="form-actions">
+
+        <button
+            type="submit" class="primary-btn"
+        >
+            Save and Continue
+        </button>
+
+    </div>
+
+</form>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="../login-pages/kiosk-api.js"></script>
+  <script src="../caremate.js"></script>
+  <script src="portal.js"></script>
+</body>
+
+</html>

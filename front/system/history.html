@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - History</title>
+  <link rel="stylesheet" href="system-base.css" />
+  <link rel="stylesheet" href="system-components.css" />
+  <link rel="stylesheet" href="history.css" />
+</head>
+
+<body>
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Portal navigation">
+      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+        <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="userInitials">GU</div>
+        <div>
+          <strong id="userShort">Guest User</strong>
+          <span id="sideRole">Student</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="portal.html"><span>OV</span> Overview</a>
+        <a href="profile.html"><span>MP</span> My Profile</a>
+        <a href="results.html"><span>LR</span> Latest Results</a>
+        <a href="assessment.html"><span>AS</span> Assessment</a>
+        <a href="history.html"><span>HI</span> History</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Need help?</span>
+        <strong>Visit the clinic desk</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Tracking Portal</p>
+          <h1>History</h1>
+        </div>
+
+        <div class="header-actions">
+          <span id="todayStamp">Today</span>
+          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="history-panel" id="history">
+          <div class="section-heading">
+            <div>
+              <h2>Measurement History</h2>
+              <p>Saved kiosk records from previous sessions.</p>
+            </div>
+          </div>
+
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="../login-pages/kiosk-api.js"></script>
+  <script src="../caremate.js"></script>
+  <script src="portal.js"></script>
+</body>
+
+</html>

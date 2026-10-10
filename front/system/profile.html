@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - My Profile</title>
+  <link rel="stylesheet" href="system-base.css" />
+  <link rel="stylesheet" href="profile.css" />
+</head>
+
+<body>
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Portal navigation">
+      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+        <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="userInitials">GU</div>
+        <div>
+          <strong id="userShort">Guest User</strong>
+          <span id="sideRole">Student</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="portal.html"><span>OV</span> Overview</a>
+        <a href="profile.html" class="active"><span>MP</span> My Profile</a>
+        <a href="results.html"><span>LR</span> Latest Results</a>
+        <a href="assessment.html"><span>AS</span> Assessment</a>
+        <a href="history.html"><span>HI</span> History</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Need help?</span>
+        <strong>Visit the clinic desk</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Tracking Portal</p>
+          <h1>My Profile</h1>
+        </div>
+
+        <div class="header-actions">
+          <span id="todayStamp">Today</span>
+          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <!-- Identity header -->
+        <section class="profile-hero" aria-label="Profile summary">
+          <div class="profile-avatar-lg" id="userInitialsLg" aria-hidden="true">GU</div>
+
+          <div class="profile-identity">
+            <h2 id="welcomeName">Guest</h2>
+            <div class="profile-meta">
+              <span class="role-pill" id="pRolePill">Student</span>
+              <span class="dot-sep">&bull;</span>
+              <span class="meta-text" id="pIdMeta">ID not available</span>
+              <span class="dot-sep">&bull;</span>
+              <span class="meta-text" id="pMemberSince">Member since &mdash;</span>
+            </div>
+          </div>
+
+          <div class="profile-hero-actions">
+            <button type="button" class="ghost-btn" id="editProfileBtn">Edit profile</button>
+            <button type="button" class="ghost-btn" id="changePhotoBtn">Change photo</button>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <!-- Left column: detailed information -->
+          <div class="info-groups">
+            <div class="info-group">
+              <div class="info-group-head">
+                <h3>Personal details</h3>
+                <span>As recorded at the clinic kiosk</span>
+              </div>
+              <div class="info-rows">
+                <div class="info-row">
+                  <small>Full name</small>
+                  <strong id="pName">Guest</strong>
+                </div>
+                <div class="info-row">
+                  <small>Role</small>
+                  <strong id="pRole">Student</strong>
+                </div>
+                <div class="info-row">
+                  <small>ID number</small>
+                  <strong id="pId">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Date of birth</small>
+                  <strong id="pDob">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Gender</small>
+                  <strong id="pGender">Not available</strong>
+                </div>  
+                <div class="info-row">
+                  <small>Barangay</small>
+                  <strong id="pBarangay">Not available</strong>
+                </div>  
+                <div class="info-row">
+                  <small>City / Municipality</small>
+                  <strong id="pCity">Not available</strong> 
+                </div>  
+                <div class="info-row">
+                  <small>Province</small>
+                  <strong id="pProvince">Not available</strong> 
+              </div>
+            </div>
+            </div>
+
+            <div class="info-group">
+              <div class="info-group-head">
+                <h3>Contact details</h3>
+                <span>Used for result notifications</span>
+              </div>
+              <div class="info-rows">
+                <div class="info-row">
+                  <small>Email</small>
+                  <strong id="pEmail">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Mobile number</small>
+                  <strong id="pPhone">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Emergency contact</small>
+                  <strong id="pEmergency">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Emergency number</small>
+                  <strong id="pEmergencyPhone">Not available</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <div class="info-group-head">
+                <h3>Kiosk account</h3>
+                <span>How your records are linked</span>
+              </div>
+              <div class="info-rows">
+                <div class="info-row">
+                  <small>Department / Section</small>
+                  <strong id="pDept">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Registered kiosk</small>
+                  <strong id="pKiosk">Not available</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column: snapshot + security -->
+          <div class="profile-side">
+            <div class="snapshot-card">
+              <h3>Account snapshot</h3>
+              <div class="snapshot-list">
+                <div class="snapshot-row">
+                  <span>Last check-in</span>
+                  <strong id="statLastCheckin">&mdash;</strong>
+                </div>
+                <div class="snapshot-row">
+                  <span>Total assessments</span>
+                  <strong id="statTotalAssessments">&mdash;</strong>
+                </div>
+                <div class="snapshot-row">
+                  <span>Latest overall status</span>
+                  <strong id="statLatestStatus">&mdash;</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-card">
+              <h3>Privacy &amp; security</h3>
+              <div class="security-note">
+                <em>!</em>
+                <p>Your health records are only visible to you and authorized clinic staff.</p>
+              </div>
+              <button type="button" class="primary-btn" id="reportIssueBtn">Report an issue with my info</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="../login-pages/kiosk-api.js"></script>
+  <script src="../caremate.js"></script>
+  <script src="portal.js"></script>
+</body>
+
+</html>

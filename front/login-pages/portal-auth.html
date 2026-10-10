@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediPoint Portal Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="portal-auth.css">
+</head>
+<body>
+  <header class="auth-header">
+    <div class="brand">
+      <img src="../../images/MediPointLogo.svg" alt="MediPoint">
+      <span class="brand-tag">Student Health Services</span>
+    </div>
+  </header>
+
+  <main class="auth-shell">
+    <section class="auth-intro">
+      <p class="eyebrow">MediPoint Portal</p>
+      <h1>One record. Every visit tracked.</h1>
+      <p>View results, assessments, and visit history from the MediPoint kiosk in one place. Sign up if this is your first time here.</p>
+
+      <svg class="pulse-rule" viewBox="0 0 460 40" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 20 H140 L155 20 L165 4 L178 36 L190 20 L200 20 L212 12 L222 20 H460" />
+      </svg>
+
+      <div class="role-summary" aria-label="Supported portal roles">
+        <span class="role-label">Portal access</span>
+        <div class="role-chips">
+          <span class="role-chip"><em>STU</em>Student</span>
+          <span class="role-chip"><em>PER</em>Personnel</span>
+          <span class="role-chip"><em>DOC</em>Doctor</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-card">
+      <div class="tabs" role="tablist" aria-label="Portal account options">
+        <button type="button" class="tab active" id="loginTab">Log in</button>
+        <button type="button" class="tab" id="signupTab">Sign up</button>
+      </div>
+
+      <form id="loginForm">
+        <h2>Log in to your portal</h2>
+        <p class="form-copy">Enter the full name and ID number on file for your account.</p>
+        <label for="loginName">Full name</label>
+        <input id="loginName" name="name" autocomplete="name" required>
+        <label for="loginId">Student Number / Personnel ID / Doctor ID</label>
+        <input id="loginId" name="idNumber" type="password" autocomplete="off" required>
+        <p class="message" id="loginMessage" aria-live="polite"></p>
+        <button class="primary-btn" type="submit">Log in to portal</button>
+      </form>
+
+      <form id="signupForm" class="hidden">
+        <h2>Create your portal account</h2>
+        <p class="form-copy">This account signs you into the online portal — it's separate from your kiosk sign-in.</p>
+        <fieldset>
+
+          <legend>I am a</legend>
+
+          <div class="role-picker">
+            <label><input type="radio" name="role" value="student" checked> Student</label>
+            <label><input type="radio" name="role" value="personnel"> Personnel</label>
+            <label><input type="radio" name="role" value="doctor"> Doctor</label>
+          </div>
+        </fieldset>
+
+        <div class="two-column">
+          <div><label for="signupName">Full name</label><input id="signupName" name="name" autocomplete="name" required></div>
+          <div><label for="signupBirthday">Birthday</label><input id="signupBirthday" name="birthday" type="date" required></div>
+        </div>
+
+        <div class="two-column">
+          <div><label for="signupGender">Gender</label><select id="signupGender" name="gender" required><option value="" selected disabled>Select your gender</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div><label for="signupDepartment" id="departmentLabel">Program</label><select id="signupDepartment" name="department" required></select></div>
+        </div>
+
+        <label for="signupId" id="signupIdLabel">Student Number</label>
+        <input id="signupId" name="idNumber" required>
+        <label for="signupEmail">Email address</label>
+        <input id="signupEmail" name="email" type="email" autocomplete="email" required>
+
+        <p class="message" id="signupMessage" aria-live="polite"></p>
+
+        <button class="primary-btn" type="submit">Create portal account</button>
+
+        <section class="created-qr hidden" id="createdQr" aria-live="polite">
+          <h3>Your kiosk QR code</h3>
+          <p>Save or print this code. Scan it at any MediPoint kiosk to check in.</p>
+          <div class="qr-output" id="portalQrBox"></div>
+          <p class="qr-identity" id="qrIdentity"></p>
+          <button class="primary-btn" id="continuePortalBtn" type="button">Continue to portal</button>
+        </section>
+
+      </form>
+    </section>
+  </main>
+  <script src="medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="kiosk-api.js"></script>
+  <script src="qrcode.min.js"></script>
+  <script src="portal-auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# Portal-only Edge Functions. Deploy into the same Supabase project the kiosk uses.
+
+project_id = "medipoint"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[functions.portal-auth]
+verify_jwt = false
+entrypoint = "./functions/portal-auth/index.ts"
+
+[functions.data-retrieval]
+verify_jwt = false
+entrypoint = "./functions/data-retrieval/index.ts"
+
+[functions.update-profile]
+verify_jwt = false
+entrypoint = "./functions/update-profile/index.ts"
+
+[functions.doctor-data]
+verify_jwt = false
+entrypoint = "./functions/doctor-data/index.ts"

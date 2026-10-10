@@ -1,0 +1,16 @@
+/* Measurement-history page only. */.history-panel {
+     max-width:960px;
+     min-height:360px;
+     margin:0 auto;
+     padding:28px
+}
+
+ .history-list {
+     margin-top:8px
+}
+
+ @media(max-width:600px) {
+     .history-panel {
+         padding:18px
+  }
+}

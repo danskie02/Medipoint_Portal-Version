@@ -1,0 +1,13 @@
+/* Latest-results page only. */.results-panel {
+     min-height:420px
+}
+
+ .status-row {
+     margin-bottom:20px
+}
+
+ @media(min-width:1180px) {
+     .results-grid {
+         grid-template-columns:repeat(3,minmax(0,1fr))
+  }
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - Clinical Staff Portal</title>
+  <link rel="stylesheet" href="system-base.css" />
+  <link rel="stylesheet" href="doctor-portal.css" />
+</head>
+<body class="doctor-portal-page">
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Clinical portal navigation">
+      <a href="doctor-portal.html" class="brand-block" aria-label="Go to MediPoint home">
+        <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="staffInitials">DS</div>
+        <div>
+          <strong id="staffName">Clinical Staff</strong>
+          <span id="staffRole">Doctor / Staff</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="doctor-portal.html" class="active"><span>OV</span> Clinical Overview</a>
+        <a href="doctor-users.html"><span>LU</span> List of Users</a>
+        <a href="doctor-analytics.html"><span>AN</span> Analytics</a>
+        <a href="doctor-histogram.html"><span>HG</span> User Histogram</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Need help?</span>
+        <strong>Escalate urgent cases to the clinic team.</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Clinical Operations</p>
+          <h1>Doctor & Clinical Staff Dashboard</h1>
+        </div>
+
+        <div class="header-actions">
+          <span class="staff-badge">Staff-only workspace</span>
+          <span id="todayStamp">Today</span>
+          <button type="button" class="home-btn" id="staffLogoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero">
+          <div>
+            <p>Daily overview</p>
+            <h2>Review patient results and flag urgent follow-up</h2>
+            <span>Monitor kiosk submissions, inspect abnormal findings, and keep clinical records organized for each user.</span>
+          </div>
+
+          <div class="hero-summary">
+            <small>Current Focus</small>
+            <strong id="heroStatus">Ready for review</strong>
+            <span id="heroText">Check the latest patient records below.</span>
+          </div>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card">
+            <span>Total Patients</span>
+            <strong id="totalPatients">0</strong>
+          </article>
+          <article class="stat-card warning">
+            <span>Monitor</span>
+            <strong id="monitorPatients">0</strong>
+          </article>
+          <article class="stat-card critical">
+            <span>Urgent</span>
+            <strong id="urgentPatients">0</strong>
+          </article>
+          <article class="stat-card normal">
+            <span>Normal</span>
+            <strong id="normalPatients">0</strong>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel">
+            <div class="section-heading">
+              <div>
+                <h2>Patient Overview</h2>
+                <p>Latest submissions from all registered users.</p>
+              </div>
+              <label class="visually-hidden" for="patientSearch">Search patients by name or ID</label>
+              <input id="patientSearch" type="search" placeholder="Search by name or ID" />
+            </div>
+
+            <div class="filters" aria-label="Patient status filters">
+              <button class="filter-btn active" data-filter="All">All</button>
+              <button class="filter-btn" data-filter="Normal">Normal</button>
+              <button class="filter-btn" data-filter="Warning">Monitor</button>
+              <button class="filter-btn" data-filter="Critical">Urgent</button>
+            </div>
+
+            <div id="patientList" class="patient-list" aria-live="polite"></div>
+          </div>
+
+          <aside class="panel detail-panel">
+            <div class="section-heading compact">
+              <div>
+                <h2>Selected Case</h2>
+                <p>Clinical summary for the chosen patient.</p>
+              </div>
+            </div>
+
+            <div id="patientDetail" class="detail-card">
+              <p class="empty">Select a patient to review their latest assessment.</p>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="../login-pages/kiosk-api.js"></script>
+  <script src="../caremate.js"></script>
+  <script src="doctor-portal.js"></script>
+</body>
+
+</html>

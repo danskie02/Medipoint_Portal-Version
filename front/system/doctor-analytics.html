@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MediPoint - Clinical Analytics</title>
+    <link rel="stylesheet" href="system-base.css">
+    <link rel="stylesheet" href="doctor-portal.css">
+    <link rel="stylesheet" href="doctor-monitoring.css">
+  </head>
+  <body class="doctor-portal-page">
+    <div class="portal-shell">
+      <aside class="side-panel">
+        <a href="doctor-portal.html" class="brand-block">
+          <img src="../../images/MediPointLogo.svg" alt="MediPoint Logo" class="logo">
+        </a>
+        <div class="side-user">
+          <div class="avatar" data-staff-initials>MD</div>
+          <div>
+            <strong data-staff-name>Clinical Staff</strong>
+            <span>Doctor</span>
+          </div>
+        </div>
+        <nav class="side-nav">
+          <a href="doctor-portal.html">
+            <span>OV</span>
+            Clinical Overview
+          </a>
+          <a href="doctor-users.html">
+            <span>LU</span>
+            List of Users
+          </a>
+          <a href="doctor-analytics.html" class="active">
+            <span>AN</span>
+            Analytics
+          </a>
+          <a href="doctor-histogram.html">
+            <span>HG</span>
+            User Histogram
+          </a>
+        </nav>
+        <div class="side-footer">
+          <span>Monitoring guidance</span>
+          <strong>Urgent flags require clinical review, not automated diagnosis.</strong>
+        </div>
+      </aside>
+      <div class="portal-content">
+        <header class="portal-header">
+          <div>
+            <p>Clinical Monitoring</p>
+            <h1>Analytics</h1>
+          </div>
+          <div class="header-actions">
+            <span class="staff-badge">Staff-only workspace</span>
+            <span data-today>Today</span>
+            <button class="home-btn" type="button" data-logout>Logout</button>
+          </div>
+        </header>
+        <main class="dashboard monitor-grid">
+          <section class="monitor-stats">
+            <article class="monitor-stat">
+              <span>Registered users</span>
+              <strong id="totalUsers">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>Active users</span>
+              <strong id="activeUsers">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>Assessments</span>
+              <strong id="totalAssessments">0</strong>
+            </article>
+            <article class="monitor-stat">
+              <span>Urgent cases</span>
+              <strong id="urgentUsers">0</strong>
+            </article>
+          </section>
+          <section class="analytics-grid">
+            <article class="monitor-panel">
+              <h2>Users by Role</h2>
+              <p>Distribution of registered kiosk users.</p>
+              <div id="roleMetrics">
+              </div>
+            </article>
+            <article class="monitor-panel">
+              <h2>Latest Monitoring Status</h2>
+              <p>Status derived from each user's most recent assessment.</p>
+              <div id="statusMetrics">
+              </div>
+            </article>
+          </section>
+          <section class="monitor-panel">
+            <h2>Monitoring Notes</h2>
+            <p>Use these analytics to prioritize record review and follow-up.</p>
+            <div class="analytics-grid">
+              <div>
+                <strong>Urgent</strong>
+                <p>Review critical or high-status findings promptly and follow clinic escalation procedures.</p>
+              </div>
+              <div>
+                <strong>No data</strong>
+                <p>Users without assessments may require kiosk onboarding or a first health check.</p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="../login-pages/medipoint-config.js"></script>
+    <script src="../shared.js"></script>
+    <script src="../login-pages/kiosk-api.js"></script>
+    <script src="doctor-monitoring.js"></script>
+  </body>
+
+</html>
