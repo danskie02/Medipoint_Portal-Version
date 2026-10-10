@@ -34,11 +34,13 @@ Open [http://127.0.0.1:5500/](http://127.0.0.1:5500/).
 ## Deploy on Render
 
 1. Connect this GitHub repository to [Render](https://render.com/).
-2. Create a **Static Site**.
-3. Set the publish directory to the repository root (`.`).
-4. After the first deploy, add `front/login-pages/medipoint-config.js` as a secret file, or bake a non-committed config into the Render build. Do not commit real API keys.
+2. Create a **Static Site** from the `main` branch and use the repository root (`.`) as the publish directory.
+3. In the service's Render environment settings, add `MEDIPOINT_SUPABASE_URL` and `MEDIPOINT_SUPABASE_ANON_KEY` with values from the same Supabase project used by the kiosk.
+4. Save and deploy. The `render.yaml` build command generates `front/login-pages/medipoint-config.js`; it fails if either variable is missing.
 
-`render.yaml` is included as a starting blueprint.
+The generated browser config is part of the published site, so the anon/publishable key is visible to visitors by design. Never use a Supabase service-role key here. `MEDIPOINT_KIOSK_ID` is left blank unless your setup explicitly requires a kiosk ID. Render Secret Files are not needed for this static-site config.
+
+`render.yaml` is included as the Render Blueprint. Supabase Edge Functions are deployed separately to the same Supabase project.
 
 ## Keep the kiosk in sync
 

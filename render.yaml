@@ -2,7 +2,15 @@ services:
   - type: web
     name: medipoint-portal
     runtime: static
-    buildCommand: echo "Static MediPoint portal"
+    buildCommand: |
+      : "${MEDIPOINT_SUPABASE_URL:?Set MEDIPOINT_SUPABASE_URL in the Render environment}"
+      : "${MEDIPOINT_SUPABASE_ANON_KEY:?Set MEDIPOINT_SUPABASE_ANON_KEY in the Render environment}"
+      mkdir -p front/login-pages
+      cat > front/login-pages/medipoint-config.js <<EOF
+      window.MEDIPOINT_SUPABASE_URL = "${MEDIPOINT_SUPABASE_URL}";
+      window.MEDIPOINT_SUPABASE_ANON_KEY = "${MEDIPOINT_SUPABASE_ANON_KEY}";
+      window.MEDIPOINT_KIOSK_ID = "";
+      EOF
     staticPublishPath: .
     routes:
       - type: rewrite
