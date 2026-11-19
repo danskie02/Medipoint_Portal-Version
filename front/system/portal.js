@@ -254,13 +254,20 @@ function formatDate(value){
 
 async function getMeasurements(){
   const current = await MediPoint.repairUserIdentity(MediPoint.getCurrentUser());
+  if(!current){
+    return [];
+  }
+
   const idNumber = MediPoint.getPublicIdNumber(current);
-  if(!current || !idNumber) {
+  const profileId = MediPoint.getProfileId(current);
+  if(!idNumber && !profileId){
     return [];
   }
 
   const remoteAssessments = await MediPoint.fetchAssessmentsFromDatabase(current);
-  const records = remoteAssessments !== null ? remoteAssessments : MediPoint.getMeasurements(idNumber);
+  const records = remoteAssessments !== null
+    ? remoteAssessments
+    : (idNumber ? MediPoint.getMeasurements(idNumber) : []);
   return records.sort((first, second) => new Date(second.date || 0) - new Date(first.date || 0));
 }
 
