@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -23,19 +23,19 @@
         </div>
         <nav class="side-nav">
           <a href="doctor-portal.html">
-            <span>OV</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg>
             Clinical Overview
           </a>
           <a href="doctor-users.html">
-            <span>LU</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#users"></use></svg>
             List of Users
           </a>
           <a href="doctor-analytics.html">
-            <span>AN</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#analytics"></use></svg>
             Analytics
           </a>
           <a href="doctor-histogram.html" class="active">
-            <span>HG</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#histogram"></use></svg>
             User Histogram
           </a>
         </nav>
@@ -82,16 +82,39 @@
             </div>
           </section>
           <section class="monitor-panel">
+            <h2>Users by College / Department</h2>
+            <p>Grouped by each registered user’s program, college, or department. This helps spot cluster sizes across academic units.</p>
+            <div class="histogram compact-histogram" id="collegeHistogram" aria-label="Histogram showing registered users by college or department">
+            </div>
+          </section>
+          <section class="analytics-grid">
+            <article class="monitor-panel">
+              <h2>Users by Gender</h2>
+              <p>Demographic split from registration profiles.</p>
+              <div id="genderHistogramMetrics"></div>
+            </article>
+            <article class="monitor-panel">
+              <h2>Users by Province</h2>
+              <p>Top provinces from permanent address records.</p>
+              <div class="histogram compact-histogram" id="provinceHistogram" aria-label="Histogram showing registered users by province"></div>
+            </article>
+          </section>
+          <section class="monitor-panel">
+            <h2>Summary Insights</h2>
+            <p>Quick high-level population metrics for staff follow-up and campus health planning.</p>
+            <div class="summary-insights" id="summaryInsights"></div>
+          </section>
+          <section class="monitor-panel">
             <h2>How to read this chart</h2>
-            <p>Each bar represents the number of registered users in an age range. “Unknown” includes accounts without a valid birthday.</p>
+            <p>Each bar represents the number of registered users in an age range, academic grouping, gender, or location. “Unknown” includes records without a valid birthday, program, gender, or address designation.</p>
           </section>
         </main>
       </div>
     </div>
+    <script src="../shared.js">
+    </script>
     <script src="../login-pages/medipoint-config.js"></script>
-    <script src="../shared.js"></script>
-    <script src="../login-pages/kiosk-api.js"></script>
-    <script src="doctor-monitoring.js"></script>
+    <script src="doctor-monitoring.js">
+    </script>
   </body>
-
 </html>

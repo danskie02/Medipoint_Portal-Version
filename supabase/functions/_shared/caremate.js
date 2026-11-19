@@ -16,6 +16,7 @@ export function buildCareMateResult(prediction) {
     recommendation: prediction.recommendation,
     probabilities: prediction.probabilities || {},
     features: prediction.features || null,
+    interpretations: prediction.interpretations || null,
     generatedAt: new Date().toISOString(),
   };
 }

@@ -2,13 +2,13 @@
 
 Standalone student, personnel, and clinical portal for MediPoint. This package does **not** include the kiosk measuring UI. The kiosk stays on the clinic machine and posts results to the shared Supabase project. This site only authenticates users and displays those stored results.
 
-Live start page: `front/login-pages/portal-auth.html` (also redirected from `/`).
+Live start page: `front/login-pages/portal-auth.html` (also redirected from `/` and `front/index.html`).
 
 ## What is included
 
-- Portal login / sign-up
-- Student and personnel dashboards (overview, profile, latest results, assessment, history)
-- Clinical staff portal
+- Portal login / sign-up, required password change, and forgotten-password OTP reset
+- Student and personnel dashboards (overview, profile, latest results, analytics, history, requests)
+- Clinical staff portal (users, monitoring, analytics, histograms)
 - Portal Edge Functions: `portal-auth`, `data-retrieval`, `update-profile`, `doctor-data`
 
 Kiosk login, QR check-in, measurement capture, `store-assessment`, and CareMate stay in the main MediPoint repository.
@@ -18,6 +18,7 @@ Kiosk login, QR check-in, measurement capture, `store-assessment`, and CareMate 
 1. Copy `front/login-pages/medipoint-config.example.js` to `front/login-pages/medipoint-config.js`.
 2. Set `MEDIPOINT_SUPABASE_URL` and `MEDIPOINT_SUPABASE_ANON_KEY` to the **same** Supabase project the kiosk uses.
 3. Deploy or reuse the portal Edge Functions in that project.
+4. For password-reset email, set Supabase secrets `SENDGRID_API_KEY` and `SENDGRID_FROM_EMAIL` (optional `SENDGRID_FROM_NAME`).
 
 Without that config, the portal cannot load kiosk results on another device.
 

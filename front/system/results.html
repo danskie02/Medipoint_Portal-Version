@@ -4,15 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MediPoint - Latest Results</title>
-  <link rel="stylesheet" href="system-base.css" />
-  <link rel="stylesheet" href="system-components.css" />
-  <link rel="stylesheet" href="results.css" />
+  <link rel="stylesheet" href="system-base.css?v=3" />
+  <link rel="stylesheet" href="system-components.css?v=3" />
+  <link rel="stylesheet" href="portal.css?v=3" />
+  <link rel="stylesheet" href="results.css?v=3" />
 </head>
 
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -25,11 +26,12 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html"><span>OV</span> Overview</a>
-        <a href="profile.html"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
       </nav>
 
       <div class="side-footer">
@@ -47,7 +49,7 @@
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
@@ -74,17 +76,48 @@
           </article>
         </section>
 
-        <section class="results-panel" id="results">
-          <div class="section-heading">
-            <div>
-              <h2>Latest Results</h2>
-              <p>Your most recent kiosk measurements.</p>
+        <section class="dashboard-grid">
+          <section class="results-panel" id="results">
+            <div class="section-heading">
+              <div>
+                <h2>Latest Results</h2>
+                <p>Your most recent kiosk measurements.</p>
+              </div>
+
+              <input type="text" id="searchInput" placeholder="Search result..." />
             </div>
 
-            <input type="text" id="searchInput" placeholder="Search result..." />
-          </div>
+            <div class="results-grid" id="resultsGrid"></div>
+          </section>
 
-          <div class="results-grid" id="resultsGrid"></div>
+          <aside class="assessment-panel" id="assessment">
+            <div class="section-heading compact">
+              <div>
+                <h2>Assessment</h2>
+                <p>Current risk summary.</p>
+              </div>
+            </div>
+
+            <div class="portal-status-card" id="overallCard">
+              <p class="status-label">Overall Status</p>
+              <strong id="overallStatus">No Data</strong>
+              <span class="status-desc" id="overallText">Complete kiosk measurements first.</span>
+            </div>
+
+            <div class="measurement-findings" id="measurementFindings" hidden>
+              <h3>What your measurements indicate</h3>
+              <ul id="measurementFindingsList"></ul>
+            </div>
+
+            <div class="recommendations">
+              <h3>Recommendations</h3>
+              <ul id="recommendationList">
+                <li>Complete your kiosk assessment to view recommendations.</li>
+              </ul>
+            </div>
+
+            <button id="exportBtn" class="primary-btn">Export CSV</button>
+          </aside>
         </section>
       </main>
     </div>
@@ -92,9 +125,7 @@
 
   <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
-  <script src="../login-pages/kiosk-api.js"></script>
   <script src="../caremate.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

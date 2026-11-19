@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MediPoint - Assessment</title>
+  <title>MediPoint - Analytics</title>
   <link rel="stylesheet" href="system-base.css" />
   <link rel="stylesheet" href="system-components.css" />
   <link rel="stylesheet" href="assessment.css" />
@@ -12,7 +12,7 @@
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -25,11 +25,12 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html"><span>OV</span> Overview</a>
-        <a href="profile.html"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
       </nav>
 
       <div class="side-footer">
@@ -42,51 +43,148 @@
       <header class="portal-header">
         <div>
           <p>Tracking Portal</p>
-          <h1>Assessment</h1>
+          <h1>Analytics</h1>
         </div>
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
       <main class="dashboard">
-        <section class="assessment-panel" id="assessment">
-          <div class="section-heading compact">
+        <section class="analytics-page" id="assessment">
+          <div class="analytics-heading">
             <div>
-              <h2>Assessment</h2>
-              <p>Current risk summary.</p>
+              <p class="analytics-kicker">Personal health tracking</p>
+              <h2>Your readings over time</h2>
+              <p>Compare measurements from each kiosk visit and keep an eye on changes.</p>
             </div>
+            <button id="exportBtn" class="primary-btn" type="button" title="Download all recorded readings as CSV">Export CSV</button>
           </div>
 
-          <div class="overall-card" id="overallCard">
-            <div class="check-icon">OK</div>
-            <div>
-              <small>Overall Status</small>
-              <strong id="overallStatus">No Data</strong>
-              <p id="overallText">Complete kiosk measurements first.</p>
+          <section class="personal-snapshot" aria-labelledby="snapshotTitle">
+            <div class="personal-snapshot-heading">
+              <div>
+                <h3 id="snapshotTitle">Personal snapshot</h3>
+                <p>Demographics from your profile used for context alongside your readings.</p>
+              </div>
             </div>
+            <div class="personal-snapshot-grid" aria-label="Personal demographics">
+              <article class="snapshot-card">
+                <span>Age</span>
+                <strong id="snapshotAge">--</strong>
+                <small id="snapshotAgeNote">From date of birth</small>
+              </article>
+              <article class="snapshot-card">
+                <span>Gender</span>
+                <strong id="snapshotGender">--</strong>
+                <small>Profile record</small>
+              </article>
+              <article class="snapshot-card">
+                <span>Program / department</span>
+                <strong id="snapshotProgram">--</strong>
+                <small>Registration details</small>
+              </article>
+              <article class="snapshot-card">
+                <span>Location</span>
+                <strong id="snapshotLocation">--</strong>
+                <small>City / province</small>
+              </article>
+            </div>
+          </section>
+
+          <div class="analytics-stats" aria-label="Reading summary">
+            <article class="analytics-stat">
+              <span>Latest reading</span>
+              <strong id="trendLatest">--</strong>
+              <small id="trendLatestDate">No readings yet</small>
+            </article>
+            <article class="analytics-stat">
+              <span>Change across records</span>
+              <strong id="trendChange">--</strong>
+              <small id="trendChangeNote">Select a measurement to compare</small>
+            </article>
+            <article class="analytics-stat">
+              <span>Records available</span>
+              <strong id="trendRecordCount">0</strong>
+              <small>Assessments with this reading</small>
+            </article>
           </div>
 
-          <div class="recommendations">
-            <h3>Recommendations</h3>
-            <ul id="recommendationList">
-              <li>Complete your kiosk assessment to view recommendations.</li>
-            </ul>
-          </div>
+          <section class="daily-trends-panel" aria-labelledby="dailyTrendsTitle">
+            <div class="daily-trends-heading">
+              <div>
+                <h3 id="dailyTrendsTitle">Daily trends · last 14 days</h3>
+                <p>Check-in volume by calendar day, plus the daily average for the selected reading.</p>
+              </div>
+              <div class="daily-trend-stats" aria-label="Fourteen day summary">
+                <article>
+                  <span>Check-ins (14d)</span>
+                  <strong id="dailyCheckinCount">0</strong>
+                </article>
+                <article>
+                  <span>Active days</span>
+                  <strong id="dailyActiveDays">0</strong>
+                </article>
+                <article>
+                  <span>Daily avg (selected)</span>
+                  <strong id="dailyMetricAverage">--</strong>
+                </article>
+              </div>
+            </div>
+            <div class="daily-trend-charts">
+              <div>
+                <h4>Check-ins per day</h4>
+                <div class="daily-bar-chart" id="dailyVolumeChart" aria-label="Check-ins per day for the last 14 days"></div>
+              </div>
+              <div>
+                <h4 id="dailyMetricChartTitle">Daily average reading</h4>
+                <div class="daily-bar-chart" id="dailyMetricChart" aria-label="Daily average for the selected reading"></div>
+              </div>
+            </div>
+          </section>
 
-          <button id="exportBtn" class="primary-btn">Export CSV</button>
+          <section class="trend-panel" aria-labelledby="trendTitle">
+            <div class="trend-toolbar">
+              <div>
+                <h3 id="trendTitle">Measurement trend</h3>
+                <p id="trendDescription">Choose a measurement to view its history.</p>
+              </div>
+              <label for="trendMetric">Reading
+                <select id="trendMetric" aria-label="Choose a reading to chart">
+                  <option value="">No readings</option>
+                </select>
+              </label>
+            </div>
+            <div class="trend-chart-wrap">
+              <svg id="trendChart" class="trend-chart" viewBox="0 0 800 300" role="img" aria-label="Measurement trend chart"></svg>
+              <p id="trendEmpty" class="trend-empty">Your readings will appear here after a kiosk assessment.</p>
+            </div>
+            <div id="trendLegend" class="trend-legend" aria-label="Chart legend"></div>
+          </section>
+
+          <section class="reading-history" aria-labelledby="readingHistoryTitle">
+            <div class="reading-history-heading">
+              <div>
+                <h3 id="readingHistoryTitle">Reading history</h3>
+                <p>Most recent visits appear first.</p>
+              </div>
+            </div>
+            <div class="reading-table-wrap">
+              <table>
+                <thead><tr><th scope="col">Visit date</th><th scope="col">Reading</th><th scope="col">Status</th></tr></thead>
+                <tbody id="trendHistory"><tr><td colspan="3">No readings recorded yet.</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+          <p class="analytics-note">These records support personal health monitoring and are not a medical diagnosis. Discuss concerning changes with clinic personnel.</p>
         </section>
       </main>
     </div>
   </div>
 
-  <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
-  <script src="../login-pages/kiosk-api.js"></script>
-  <script src="../caremate.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

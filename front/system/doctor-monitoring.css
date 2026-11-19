@@ -152,6 +152,109 @@
   background: #f9fafb;
 }
 
+.user-table tbody tr.selected {
+  background: #fff7f7;
+}
+
+.user-select {
+  display: grid;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #111827;
+  text-align: left;
+  font-weight: 800;
+}
+
+.user-select span {
+  color: #b80f1d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.selected-user-profile {
+  display: grid;
+  gap: 20px;
+}
+
+.user-profile-heading,
+.user-assessment-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.user-profile-heading h3,
+.user-assessment-heading h3 {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.user-profile-heading p,
+.user-assessment-heading span {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.user-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #e5e7eb;
+  border-left: 1px solid #e5e7eb;
+}
+
+.user-profile-field {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 13px;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.user-profile-field span {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.user-profile-field strong {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.user-assessment-summary {
+  display: grid;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.user-result-list {
+  display: grid;
+  gap: 8px;
+}
+
+.user-result-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(100px, auto) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  background: #f9fafb;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.user-result-row small {
+  color: #6b7280;
+}
+
 
 /* =========================================================
    6. STATUS PILLS
@@ -197,20 +300,212 @@
   gap: 18px;
 }
 
+.daily-clinic-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
 
-/* =========================================================
-   8. METRIC PROGRESS ROWS
-   ========================================================= */
+.daily-clinic-heading h2 {
+  margin-bottom: 5px;
+}
+
+.daily-clinic-heading > div > p {
+  margin-bottom: 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.daily-clinic-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, auto));
+  gap: 10px;
+}
+
+.daily-clinic-stats article {
+  min-width: 0;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.daily-clinic-stats span {
+  display: block;
+  color: #6b7280;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.daily-clinic-stats strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.daily-clinic-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.daily-clinic-charts h3 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.clinic-daily-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 180px;
+  padding: 12px 6px 0;
+  border-left: 1px solid #d1d5db;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.clinic-day-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.clinic-day-value {
+  color: #4b5563;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  min-height: 12px;
+}
+
+.clinic-day-bar {
+  width: 100%;
+  max-width: 18px;
+  min-height: 2px;
+  background: linear-gradient(180deg, #dc3545, #9f101c);
+  border-radius: 4px 4px 0 0;
+}
+
+.clinic-day-stack {
+  width: 100%;
+  max-width: 18px;
+  min-height: 2px;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
+  background: #e5e7eb;
+}
+
+.clinic-stack-urgent {
+  display: block;
+  width: 100%;
+  background: #b91c1c;
+}
+
+.clinic-stack-normal {
+  display: block;
+  width: 100%;
+  background: #168a4a;
+}
+
+.clinic-day-label {
+  color: #6b7280;
+  font-size: 9px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.clinic-daily-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+  color: #4b5563;
+  font-size: 12px;
+}
+
+.clinic-daily-legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: -2px;
+}
+
+.legend-urgent {
+  background: #b91c1c;
+}
+
+.legend-normal {
+  background: #168a4a;
+}
+
+.summary-insights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.insight-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #fff7f7, #ffffff);
+  border: 1px solid #f1d0d4;
+  border-radius: 12px;
+}
+
+.insight-card span {
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.insight-card strong {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.insight-card small {
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.compact-histogram {
+  height: 290px;
+}
 
 .metric-row {
   display: grid;
-  grid-template-columns: 130px minmax(0, 1fr) 45px;
+  grid-template-columns: minmax(110px, 150px) minmax(0, 1fr) 45px;
   align-items: center;
   gap: 12px;
 
   margin: 14px 0;
 
   font-size: 13px;
+}
+
+.metric-row > span {
+  overflow-wrap: anywhere;
+  line-height: 1.3;
 }
 
 .metric-track {
@@ -319,6 +614,14 @@
   .analytics-grid {
     grid-template-columns: 1fr;
   }
+
+  .daily-clinic-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-insights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 
@@ -340,6 +643,19 @@
     width: 100%;
   }
 
+  .daily-clinic-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .daily-clinic-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-insights {
+    grid-template-columns: 1fr;
+  }
+
   .histogram {
     gap: 5px;
 
@@ -356,7 +672,19 @@
   }
 
   .metric-row {
-    grid-template-columns: 100px minmax(0, 1fr) 38px;
+    grid-template-columns: minmax(90px, 110px) minmax(0, 1fr) 38px;
     gap: 8px;
+  }
+
+  .user-profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .user-result-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .user-result-row small {
+    grid-column: 1 / -1;
   }
 }

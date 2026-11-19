@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MediPoint - Tracking Portal</title>
+  <title>MediPoint - Health Overview</title>
   <link rel="stylesheet" href="system-base.css?v=3" />
   <link rel="stylesheet" href="system-components.css?v=3" />
   <link rel="stylesheet" href="portal.css?v=3" />
@@ -12,7 +12,7 @@
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -25,11 +25,12 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html" class="active"><span>OV</span> Overview</a>
-        <a href="profile.html"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
       </nav>
 
       <div class="side-footer">
@@ -42,12 +43,12 @@
       <header class="portal-header">
         <div>
           <p>Tracking Portal</p>
-          <h1>Professional Health Dashboard</h1>
+          <h1>Health Overview</h1>
         </div>
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
@@ -56,7 +57,7 @@
           <div>
             <p>Welcome back</p>
             <h2><span id="welcomeName">Guest</span></h2>
-            <span>Monitor kiosk health records, review trends, and export your latest measurements.</span>
+            <span>Your latest health status and assessment summary.</span>
           </div>
 
           <div class="hero-summary" id="heroSummary">
@@ -66,105 +67,37 @@
           </div>
         </section>
 
-        <section class="profile-card" id="profile">
-          <div>
-            <small>Name</small>
-            <strong id="pName">Guest</strong>
-          </div>
-          <div>
-            <small>Role</small>
-            <strong id="pRole">Student</strong>
-          </div>
-          <div>
-            <small>ID Number</small>
-            <strong id="pId">Not available</strong>
-          </div>
-          <div>
-            <small>Email</small>
-            <strong id="pEmail">Not available</strong>
-          </div>
-        </section>
+        <section id="portalReminder" class="portal-reminder" aria-live="polite" hidden></section>
 
-        <section class="status-row">
-          <article class="status-card all active" data-filter="All">
+        <section class="status-row overview-status-row" aria-label="Latest result counts">
+          <article class="status-card all">
             <span>All Results</span>
             <strong id="allCount">0</strong>
           </article>
 
-          <article class="status-card normal" data-filter="Normal">
+          <article class="status-card normal">
             <span>Normal</span>
             <strong id="normalCount">0</strong>
           </article>
 
-          <article class="status-card warning" data-filter="Warning">
+          <article class="status-card warning">
             <span>Warning</span>
             <strong id="warningCount">0</strong>
           </article>
 
-          <article class="status-card critical" data-filter="Critical">
+          <article class="status-card critical">
             <span>Critical</span>
             <strong id="criticalCount">0</strong>
           </article>
         </section>
 
-        <section class="dashboard-grid">
-          <section class="results-panel" id="results">
-            <div class="section-heading">
-              <div>
-                <h2>Latest Results</h2>
-                <p>Your most recent kiosk measurements.</p>
-              </div>
-
-              <input type="text" id="searchInput" placeholder="Search result..." />
-            </div>
-
-            <div class="results-grid" id="resultsGrid"></div>
-          </section>
-
-          <aside class="assessment-panel" id="assessment">
-            <div class="section-heading compact">
-              <div>
-                <h2>Assessment</h2>
-                <p>Current risk summary.</p>
-              </div>
-            </div>
-
-            <div class="portal-status-card" id="overallCard">
-              <p class="status-label">Overall Status</p>
-              <strong id="overallStatus">No Data</strong>
-              <span class="status-desc" id="overallText">Complete kiosk measurements first.</span>
-            </div>
-
-            <div class="recommendations">
-              <h3>Recommendations</h3>
-              <ul id="recommendationList">
-                <li>Complete your kiosk assessment to view recommendations.</li>
-              </ul>
-            </div>
-
-            <button id="exportBtn" class="primary-btn">Export CSV</button>
-          </aside>
-        </section>
-
-        <section class="history-panel" id="history">
-          <div class="section-heading">
-            <div>
-              <h2>Measurement History</h2>
-              <p>Saved kiosk records from previous sessions.</p>
-            </div>
-          </div>
-
-          <div id="historyList" class="history-list"></div>
-        </section>
       </main>
     </div>
   </div>
 
   <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
-  <script src="../login-pages/kiosk-api.js"></script>
   <script src="../caremate.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

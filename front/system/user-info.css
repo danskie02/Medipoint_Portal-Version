@@ -187,6 +187,23 @@
      line-height:1.5
 }
 
+ .profile-completion-reminder {
+     display:flex;
+     align-items:flex-start;
+     gap:10px;
+     margin-bottom:16px;
+     padding:15px 17px;
+     border-left:4px solid var(--warning);
+     background:var(--warning-light);
+     color:#684300;
+     font-size:13px;
+     line-height:1.5
+}
+
+ .profile-completion-reminder strong {
+     flex:0 0 auto
+}
+
   .form-actions {
      display:flex;
      justify-content:flex-end

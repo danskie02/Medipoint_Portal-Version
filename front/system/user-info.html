@@ -11,7 +11,7 @@
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -24,11 +24,11 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html"><span>OV</span> Overview</a>
-        <a href="profile.html"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
       </nav>
 
       <div class="side-footer">
@@ -46,7 +46,7 @@
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
@@ -58,6 +58,11 @@
             <span>Your information will be saved to My Profile and used to connect your kiosk records to the correct account.</span>
           </div>
         </section>
+
+        <aside class="profile-completion-reminder" role="status">
+          <strong>Profile incomplete</strong>
+          <span>Finish the required contact and emergency details below to open your health dashboard and request clinic follow-up.</span>
+        </aside>
 
         <section class="setup-panel">
          <form id="userInfoForm" class="setup-form">
@@ -453,8 +458,6 @@
   <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
   <script src="../login-pages/kiosk-api.js"></script>
-  <script src="../caremate.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

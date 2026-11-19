@@ -1,4 +1,5 @@
-# Portal-only Edge Functions. Deploy into the same Supabase project the kiosk uses.
+# MediPoint Supabase local/dev configuration
+# Docs: https://supabase.com/docs/guides/cli/config
 
 project_id = "medipoint"
 
@@ -14,13 +15,13 @@ port = 54322
 shadow_port = 54320
 major_version = 15
 
-[functions.portal-auth]
-verify_jwt = false
-entrypoint = "./functions/portal-auth/index.ts"
+[studio]
+enabled = true
+port = 54323
 
-[functions.data-retrieval]
+[functions.kiosk-qr-login]
 verify_jwt = false
-entrypoint = "./functions/data-retrieval/index.ts"
+entrypoint = "./functions/kiosk-qr-login/index.ts"
 
 [functions.update-profile]
 verify_jwt = false
@@ -29,3 +30,23 @@ entrypoint = "./functions/update-profile/index.ts"
 [functions.doctor-data]
 verify_jwt = false
 entrypoint = "./functions/doctor-data/index.ts"
+
+[functions.kiosk-id-login]
+verify_jwt = false
+entrypoint = "./functions/kiosk-id-login/index.ts"
+
+[functions.kiosk-signup]
+verify_jwt = false
+entrypoint = "./functions/kiosk-signup/index.ts"
+
+[functions.portal-auth]
+verify_jwt = false
+entrypoint = "./functions/portal-auth/index.ts"
+
+[functions.store-assessment]
+verify_jwt = false
+entrypoint = "./functions/store-assessment/index.ts"
+
+[functions.data-retrieval]
+verify_jwt = false
+entrypoint = "./functions/data-retrieval/index.ts"

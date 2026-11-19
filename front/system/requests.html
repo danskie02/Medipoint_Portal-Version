@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - Clinic Requests</title>
+  <link rel="stylesheet" href="system-base.css?v=3" />
+  <link rel="stylesheet" href="system-components.css?v=3" />
+  <link rel="stylesheet" href="portal.css?v=3" />
+</head>
+
+<body>
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Portal navigation">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
+        <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="userInitials">GU</div>
+        <div>
+          <strong id="userShort">Guest User</strong>
+          <span id="sideRole">Student</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Need help?</span>
+        <strong>Visit the clinic desk</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Tracking Portal</p>
+          <h1>Clinic Requests</h1>
+        </div>
+
+        <div class="header-actions">
+          <span id="todayStamp">Today</span>
+          <a href="../index.html" class="home-btn">Home</a>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="clinic-request-panel" id="clinicRequests">
+          <div class="section-heading">
+            <div>
+              <h2>Send a clinic request</h2>
+              <p>Share your preferred date and the reason for your request.</p>
+            </div>
+            <small class="local-request-notice">Requests are stored in this browser.</small>
+          </div>
+          <form id="clinicRequestForm" class="clinic-request-form">
+            <label for="clinicRequestType">Request type</label>
+            <select id="clinicRequestType" name="type" required>
+              <option value="Appointment">Clinic appointment</option>
+              <option value="Follow-up">Follow-up on a previous visit</option>
+            </select>
+            <label for="clinicPreferredDate">Preferred date</label>
+            <input id="clinicPreferredDate" name="preferredDate" type="date">
+            <label for="clinicRequestMessage">What would you like the clinic to know?</label>
+            <textarea id="clinicRequestMessage" name="message" rows="3" maxlength="500" required></textarea>
+            <button class="primary-btn" type="submit">Send request</button>
+            <p id="clinicRequestMessageStatus" class="request-message" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="clinic-request-panel request-history-panel" aria-labelledby="requestsSentHeading">
+          <div class="section-heading">
+            <div>
+              <h2 id="requestsSentHeading">Requests sent</h2>
+              <p>Review the latest status and open a request for its full details.</p>
+            </div>
+          </div>
+          <div id="userClinicRequestList" class="user-clinic-request-list" aria-live="polite">
+            <p class="empty">You have not sent a clinic request.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="../shared.js"></script>
+  <script src="../caremate.js"></script>
+  <script src="portal.js"></script>
+</body>
+</html>

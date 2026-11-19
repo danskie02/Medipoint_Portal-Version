@@ -36,6 +36,7 @@ export function mapProfileRowToUser(profile, accountType = 'portal') {
     currentMedications: profile.current_medications || '',
     knownAllergies: profile.known_allergies || '',
     profileComplete: Boolean(profile.profile_complete),
+    mustChangePassword: profile.must_change_password === true || !profile.password_hash,
     managedAccount: Boolean(profile.managed_account),
     memberSince: profile.member_since,
     accountType,

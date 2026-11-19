@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -23,19 +23,19 @@
         </div>
         <nav class="side-nav">
           <a href="doctor-portal.html">
-            <span>OV</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg>
             Clinical Overview
           </a>
           <a href="doctor-users.html">
-            <span>LU</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#users"></use></svg>
             List of Users
           </a>
           <a href="doctor-analytics.html" class="active">
-            <span>AN</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#analytics"></use></svg>
             Analytics
           </a>
           <a href="doctor-histogram.html">
-            <span>HG</span>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#histogram"></use></svg>
             User Histogram
           </a>
         </nav>
@@ -88,6 +88,54 @@
               <div id="statusMetrics">
               </div>
             </article>
+            <article class="monitor-panel">
+              <h2>Users by Gender</h2>
+              <p>Demographic split from registration profiles.</p>
+              <div id="genderMetrics">
+              </div>
+            </article>
+            <article class="monitor-panel">
+              <h2>Users by Location</h2>
+              <p>Top provinces and cities from permanent address records.</p>
+              <div id="locationMetrics">
+              </div>
+            </article>
+          </section>
+          <section class="monitor-panel">
+            <div class="daily-clinic-heading">
+              <div>
+                <h2>Daily clinic trends · last 14 days</h2>
+                <p>Assessment volume and urgent versus normal outcomes by calendar day.</p>
+              </div>
+              <div class="daily-clinic-stats" aria-label="Fourteen day clinic summary">
+                <article>
+                  <span>Assessments (14d)</span>
+                  <strong id="clinicDailyAssessments">0</strong>
+                </article>
+                <article>
+                  <span>Active days</span>
+                  <strong id="clinicActiveDays">0</strong>
+                </article>
+                <article>
+                  <span>Urgent (14d)</span>
+                  <strong id="clinicUrgentCount">0</strong>
+                </article>
+              </div>
+            </div>
+            <div class="daily-clinic-charts">
+              <div>
+                <h3>Assessments per day</h3>
+                <div class="clinic-daily-chart" id="clinicVolumeChart" aria-label="Assessments per day for the last 14 days"></div>
+              </div>
+              <div>
+                <h3>Urgent vs normal mix</h3>
+                <div class="clinic-daily-chart stacked" id="clinicStatusChart" aria-label="Urgent versus normal assessments per day"></div>
+                <div class="clinic-daily-legend" aria-hidden="true">
+                  <span><i class="legend-urgent"></i> Urgent / warning</span>
+                  <span><i class="legend-normal"></i> Normal</span>
+                </div>
+              </div>
+            </div>
           </section>
           <section class="monitor-panel">
             <h2>Monitoring Notes</h2>
@@ -106,10 +154,10 @@
         </main>
       </div>
     </div>
+    <script src="../shared.js">
+    </script>
     <script src="../login-pages/medipoint-config.js"></script>
-    <script src="../shared.js"></script>
-    <script src="../login-pages/kiosk-api.js"></script>
-    <script src="doctor-monitoring.js"></script>
+    <script src="doctor-monitoring.js">
+    </script>
   </body>
-
 </html>

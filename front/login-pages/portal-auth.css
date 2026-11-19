@@ -29,20 +29,27 @@
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
 
   font-family: "Poppins", sans-serif;
-  color: var(--ink);
+  color: var(--white);
 
-  background-color: var(--paper);
+  background-color: var(--red-dark);
   background-image:
-    repeating-linear-gradient(
-      100deg,
-      transparent 0 118px,
-      rgba(17, 60, 62, 0.05) 118px 119px,
-      transparent 119px 240px
-    );
+        linear-gradient(
+            to right,
+            rgba(20,20,20,0.45),
+            rgba(20,20,20,0.20),
+            rgba(20,20,20,0.05)
+        ),
+        url('../../images/Welcomepage1.png');   
+      
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    overflow:auto;
+    position:relative;
 }
 
 
@@ -72,7 +79,7 @@ body {
   padding-left: 14px;
   border-left: 1px solid var(--line);
 
-  color: var(--muted);
+  color: var(--white);
   font: 600 12px "JetBrains Mono", monospace;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -101,14 +108,14 @@ body {
 ========================================================= */
 
 .eyebrow {
-  color: var(--red);
+  color: var(--paper);
   font: 700 13px "JetBrains Mono", monospace;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .auth-intro h1 {
-  max-width: 620px;
+  max-width: 620  px;
   margin: 10px 0 18px;
 
   font-family: "Space Grotesk", sans-serif;
@@ -121,7 +128,7 @@ body {
 .auth-intro > p:not(.eyebrow) {
   max-width: 520px;
 
-  color: var(--muted);
+  color: var(--white);
   font-size: 17px;
   line-height: 1.7;
 }
@@ -140,7 +147,7 @@ body {
 
 .pulse-rule path {
   fill: none;
-  stroke: var(--teal);
+  stroke: var(--white);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -449,6 +456,27 @@ fieldset {
 
 .message.success {
   color: #15803d;
+}
+
+.field-hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.auth-links {
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+.text-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--red);
+  font: 700 13px "Poppins", sans-serif;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 

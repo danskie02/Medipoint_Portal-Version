@@ -62,6 +62,7 @@ export function extractCareMatePayload(results) {
     recommendation: item.recommendation,
     probabilities: item.probabilities || {},
     features: item.features || null,
+    interpretations: item.interpretations || null,
     generatedAt: item.generatedAt || null,
   };
 }
@@ -139,6 +140,7 @@ export function buildCareMateResultRow(assessmentId, caremate, sortOrder) {
       recommendation: caremate.recommendation,
       probabilities: caremate.probabilities || {},
       features: caremate.features || null,
+      interpretations: caremate.interpretations || null,
       generatedAt: caremate.generatedAt || new Date().toISOString(),
     },
     sort_order: sortOrder,
@@ -167,6 +169,7 @@ export function mapAssessmentRows(assessment, resultRows, profile = null) {
       recommendation: caremateRow.metadata?.recommendation || caremateRow.value,
       probabilities: caremateRow.metadata?.probabilities || {},
       features: caremateRow.metadata?.features || null,
+      interpretations: caremateRow.metadata?.interpretations || null,
       generatedAt: caremateRow.metadata?.generatedAt || caremateRow.created_at || null,
     }
     : null;

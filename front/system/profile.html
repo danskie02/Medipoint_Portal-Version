@@ -11,7 +11,7 @@
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -24,11 +24,12 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html"><span>OV</span> Overview</a>
-        <a href="profile.html" class="active"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
       </nav>
 
       <div class="side-footer">
@@ -46,7 +47,7 @@
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
@@ -102,18 +103,39 @@
                   <strong id="pGender">Not available</strong>
                 </div>  
                 <div class="info-row">
-                  <small>Barangay</small>
+                  <small>Permanent barangay</small>
                   <strong id="pBarangay">Not available</strong>
                 </div>  
                 <div class="info-row">
-                  <small>City / Municipality</small>
+                  <small>Permanent city / municipality</small>
                   <strong id="pCity">Not available</strong> 
                 </div>  
                 <div class="info-row">
-                  <small>Province</small>
+                  <small>Permanent province</small>
                   <strong id="pProvince">Not available</strong> 
               </div>
             </div>
+            </div>
+
+            <div class="info-group">
+              <div class="info-group-head">
+                <h3>Present address</h3>
+                <span>Current residential address</span>
+              </div>
+              <div class="info-rows">
+                <div class="info-row">
+                  <small>Barangay</small>
+                  <strong id="pPresentBarangay">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>City / municipality</small>
+                  <strong id="pPresentCity">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Province</small>
+                  <strong id="pPresentProvince">Not available</strong>
+                </div>
+              </div>
             </div>
 
             <div class="info-group">
@@ -135,8 +157,45 @@
                   <strong id="pEmergency">Not available</strong>
                 </div>
                 <div class="info-row">
+                  <small>Relationship to emergency contact</small>
+                  <strong id="pGuardianRelationship">Not available</strong>
+                </div>
+                <div class="info-row">
                   <small>Emergency number</small>
                   <strong id="pEmergencyPhone">Not available</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <div class="info-group-head">
+                <h3>Health background</h3>
+                <span>Information provided during profile setup</span>
+              </div>
+              <div class="info-rows">
+                <div class="info-row">
+                  <small>Medical conditions</small>
+                  <strong id="pMedicalHistory">None reported</strong>
+                </div>
+                <div class="info-row">
+                  <small>Other medical condition</small>
+                  <strong id="pOtherMedicalHistory">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Previous surgeries</small>
+                  <strong id="pPreviousSurgeries">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Date of previous surgeries</small>
+                  <strong id="pPreviousSurgeryDate">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Current medications</small>
+                  <strong id="pCurrentMedications">Not available</strong>
+                </div>
+                <div class="info-row">
+                  <small>Known allergies</small>
+                  <strong id="pKnownAllergies">Not available</strong>
                 </div>
               </div>
             </div>
@@ -179,6 +238,12 @@
               </div>
             </div>
 
+            <div class="qr-card">
+              <h3>Kiosk login QR</h3>
+              <div class="qr-box" id="kioskQrBox" aria-label="Kiosk login QR code"></div>
+              <p>Use this QR code to sign in at the kiosk.</p>
+            </div>
+
             <div class="security-card">
               <h3>Privacy &amp; security</h3>
               <div class="security-note">
@@ -195,9 +260,7 @@
 
   <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
-  <script src="../login-pages/kiosk-api.js"></script>
-  <script src="../caremate.js"></script>
+  <script src="../login-pages/qrcode.min.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

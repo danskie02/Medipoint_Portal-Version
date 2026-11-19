@@ -43,18 +43,62 @@
 
       <form id="loginForm">
         <h2>Log in to your portal</h2>
-        <p class="form-copy">Enter the full name and ID number on file for your account.</p>
+        <p class="form-copy">Enter the full name on your account and your password. A new account uses its ID number as a temporary password.</p>
         <label for="loginName">Full name</label>
         <input id="loginName" name="name" autocomplete="name" required>
-        <label for="loginId">Student Number / Personnel ID / Doctor ID</label>
-        <input id="loginId" name="idNumber" type="password" autocomplete="off" required>
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
         <p class="message" id="loginMessage" aria-live="polite"></p>
         <button class="primary-btn" type="submit">Log in to portal</button>
+        <p class="auth-links"><button class="text-link" id="forgotPasswordLink" type="button">Forgot password?</button></p>
+      </form>
+
+      <form id="changePasswordForm" class="hidden">
+        <h2>Choose a new password</h2>
+        <p class="form-copy">Your ID number was only a temporary password. Set a password that only you know before continuing.</p>
+        <label for="newPassword">New password</label>
+        <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
+        <label for="confirmPassword">Confirm new password</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required>
+        <p class="field-hint">Use at least 8 characters, and do not reuse your ID number.</p>
+        <p class="message" id="changePasswordMessage" aria-live="polite"></p>
+        <button class="primary-btn" type="submit">Save password and continue</button>
+      </form>
+
+      <form id="forgotPasswordForm" class="hidden">
+        <h2>Reset your password</h2>
+        <p class="form-copy" id="forgotFormCopy">Confirm the name, ID number, and email on your account. We will email a verification code before you can set a new password.</p>
+
+        <div id="forgotIdentityStep">
+          <label for="forgotName">Full name</label>
+          <input id="forgotName" name="name" autocomplete="name">
+          <label for="forgotId">Student Number / Personnel ID</label>
+          <input id="forgotId" name="idNumber" autocomplete="username">
+          <label for="forgotEmail">Email address</label>
+          <input id="forgotEmail" name="email" type="email" autocomplete="email">
+          <p class="message" id="forgotPasswordMessage" aria-live="polite"></p>
+          <button class="primary-btn" type="submit" id="forgotRequestBtn">Send verification code</button>
+        </div>
+
+        <div id="forgotOtpStep" class="hidden">
+          <label for="forgotOtp">Email verification code</label>
+          <input id="forgotOtp" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+          <label for="forgotNewPassword">New password</label>
+          <input id="forgotNewPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8">
+          <label for="forgotConfirmPassword">Confirm new password</label>
+          <input id="forgotConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8">
+          <p class="field-hint">Use at least 8 characters, and do not reuse your ID number.</p>
+          <p class="message" id="forgotOtpMessage" aria-live="polite"></p>
+          <button class="primary-btn" type="submit" id="forgotConfirmBtn">Verify code and save password</button>
+          <p class="auth-links"><button class="text-link" id="resendOtpLink" type="button">Resend code</button></p>
+        </div>
+
+        <p class="auth-links"><button class="text-link" id="backToLoginLink" type="button">Back to log in</button></p>
       </form>
 
       <form id="signupForm" class="hidden">
         <h2>Create your portal account</h2>
-        <p class="form-copy">This account signs you into the online portal — it's separate from your kiosk sign-in.</p>
+        <p class="form-copy">Your ID number is the temporary password. The first time you log in, you will choose a password of your own.</p>
         <fieldset>
 
           <legend>I am a</legend>

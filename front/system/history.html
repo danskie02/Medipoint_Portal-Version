@@ -12,7 +12,7 @@
 <body>
   <div class="portal-shell">
     <aside class="side-panel" aria-label="Portal navigation">
-      <a href="portal.html" class="brand-block" aria-label="Go to MediPoint home">
+      <a href="../index.html" class="brand-block" aria-label="Go to MediPoint home">
         <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
       </a>
 
@@ -25,11 +25,12 @@
       </div>
 
       <nav class="side-nav">
-        <a href="portal.html"><span>OV</span> Overview</a>
-        <a href="profile.html"><span>MP</span> My Profile</a>
-        <a href="results.html"><span>LR</span> Latest Results</a>
-        <a href="assessment.html"><span>AS</span> Assessment</a>
-        <a href="history.html"><span>HI</span> History</a>
+        <a href="portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Overview</a>
+        <a href="profile.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#profile"></use></svg> My Profile</a>
+        <a href="results.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#results"></use></svg> Latest Results</a>
+        <a href="assessment.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Analytics</a>
+        <a href="history.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#history"></use></svg> History</a>
+        <a href="requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#assessment"></use></svg> Requests</a>
       </nav>
 
       <div class="side-footer">
@@ -47,7 +48,7 @@
 
         <div class="header-actions">
           <span id="todayStamp">Today</span>
-          <button type="button" class="home-btn" id="portalLogoutBtn">Sign out</button>
+          <a href="../index.html" class="home-btn">Home</a>
         </div>
       </header>
 
@@ -55,22 +56,18 @@
         <section class="history-panel" id="history">
           <div class="section-heading">
             <div>
-              <h2>Measurement History</h2>
-              <p>Saved kiosk records from previous sessions.</p>
+              <h2>Visit History</h2>
+              <p>Assessments, clinic requests, and follow-up updates, newest first.</p>
             </div>
           </div>
 
-          <div id="historyList" class="history-list"></div>
+          <div id="historyList" class="history-list" aria-live="polite"></div>
         </section>
       </main>
     </div>
   </div>
 
-  <script src="../login-pages/medipoint-config.js"></script>
   <script src="../shared.js"></script>
-  <script src="../login-pages/kiosk-api.js"></script>
-  <script src="../caremate.js"></script>
   <script src="portal.js"></script>
 </body>
-
 </html>

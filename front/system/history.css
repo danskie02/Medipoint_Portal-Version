@@ -9,8 +9,31 @@
      margin-top:8px
 }
 
+ .history-data-table {
+     min-width:620px
+}
+
+ .history-data-table td:nth-child(2) {
+     min-width:155px
+}
+
+ .history-data-table td:nth-child(3) {
+     max-width:360px;
+     line-height:1.5;
+     overflow-wrap:anywhere
+}
+
  @media(max-width:600px) {
      .history-panel {
          padding:18px
   }
+
+            .history-data-table {
+                    min-width:540px
+     }
+
+            .history-data-table th:nth-child(3),
+            .history-data-table td:nth-child(3) {
+                    display:none
+     }
 }
