@@ -49,7 +49,6 @@
   }
 
   let profiles = MediPoint.getUsers().filter(user => user.role === 'student' || user.role === 'personnel');
-  let selectedUserId = '';
   const recordsFor = user => Array.isArray(user.assessments) ? user.assessments : MediPoint.getMeasurements(user.idNumber || user.id || user.studentNumber);
   const statusFor = user => {
     const results = (recordsFor(user)[0] || { results:[] }).results || [];
@@ -173,16 +172,23 @@
         : '<p class="empty-monitor">No college or department data available.</p>';
     }
 
-    const provinceChart = document.getElementById('provinceHistogram');
-    if (provinceChart) {
-      const items = Object.entries(provinceCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 6)
-        .map(([label, value]) => ({ label, value }));
-      const maxProvince = Math.max(1, ...items.map(item => item.value));
-      provinceChart.innerHTML = items.length
-        ? items.map(item => `<div class="histogram-column"><span class="histogram-value">${item.value}</span><div class="histogram-bar" style="height:${Math.max(3, (item.value / maxProvince) * 240)}px"></div><span class="histogram-label">${escape(item.label)}</span></div>`).join('')
-        : '<p class="empty-monitor">No province data available.</p>';
+    const bmiItems = [
+      { label: 'Underweight', value: 0 },
+      { label: 'Normal', value: 0 },
+      { label: 'Overweight', value: 0 },
+      { label: 'Obese', value: 0 },
+      { label: 'No data', value: 0 },
+    ];
+    liveProfiles.forEach(user => {
+      const category = bmiCategoryFor(user, liveRecords);
+      const bucket = bmiItems.find(item => item.label === category);
+      if (bucket) bucket.value += 1;
+    });
+    const bmiChart = document.getElementById('bmiMetrics');
+    if (bmiChart) {
+      bmiChart.innerHTML = liveProfiles.length
+        ? metricRows(bmiItems)
+        : '<p class="empty-monitor">No BMI data available.</p>';
     }
 
     renderClinicDailyTrends(liveProfiles, liveRecords);
@@ -194,7 +200,7 @@
       const completionRate = liveProfiles.length ? Math.round((liveProfiles.filter(user => user.profileComplete).length / liveProfiles.length) * 100) : 0;
       const topCollege = Object.entries(collegeCounts).sort((a, b) => b[1] - a[1])[0] || ['Unspecified', 0];
       const topGender = genderItems[0] || { label: 'Unspecified', value: 0 };
-      const topProvince = Object.entries(provinceCounts).sort((a, b) => b[1] - a[1])[0] || ['Unspecified', 0];
+      const topBmi = [...bmiItems].filter(item => item.label !== 'No data').sort((a, b) => b.value - a.value)[0] || { label: 'No data', value: 0 };
 
       const insights = [
         { label: 'Profile complete', value: `${completionRate}%`, detail: `${liveProfiles.filter(user => user.profileComplete).length} of ${liveProfiles.length} users` },
@@ -202,7 +208,7 @@
         { label: 'Pending review', value: String(usersWithoutAssessments), detail: 'Users without a recorded kiosk assessment' },
         { label: 'Top college', value: topCollege[0].length > 18 ? `${topCollege[0].slice(0, 18)}…` : topCollege[0], detail: `${topCollege[1]} registered users` },
         { label: 'Top gender', value: topGender.label, detail: `${topGender.value} registered users` },
-        { label: 'Top province', value: topProvince[0].length > 18 ? `${topProvince[0].slice(0, 18)}…` : topProvince[0], detail: `${topProvince[1]} registered users` },
+        { label: 'Top BMI group', value: topBmi.label, detail: `${topBmi.value} users from latest assessments` },
       ];
 
       summaryContainer.innerHTML = insights.map(item => `
@@ -228,93 +234,19 @@
     if(!body) return;
     const query = String(search || '').trim().toLowerCase();
     const filtered = profiles.filter(user => `${user.name || ''} ${MediPoint.getPublicIdNumber(user)} ${user.role || ''} ${user.email || ''} ${user.program || user.departmentOffice || ''}`.toLowerCase().includes(query));
-    if(!filtered.some(user => profileKey(user) === selectedUserId)) {
-      selectedUserId = filtered[0] ? profileKey(filtered[0]) : '';
-    }
     body.innerHTML = filtered.length ? filtered.map(user => {
       const records = recordsFor(user);
       const status = statusFor(user);
       const latest = records[0];
       const dateText = latest && latest.date ? new Date(latest.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No check-in';
       const key = profileKey(user);
-      return `<tr class="${selectedUserId === key ? 'selected' : ''}"><td><button type="button" class="user-select" data-user-id="${escape(key)}" aria-pressed="${selectedUserId === key}">${escape(user.name || 'Unknown')}<span>View profile</span></button></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(user.program || user.departmentOffice || 'Not specified')}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
+      const profileUrl = `doctor-user-profile.html?user=${encodeURIComponent(key)}`;
+      return `<tr><td><a class="user-select" href="${escape(profileUrl)}">${escape(user.name || 'Unknown')}<span>View profile</span></a></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(user.program || user.departmentOffice || 'Not specified')}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
     }).join('') : '<tr><td colspan="7" class="empty-monitor">No users match this search.</td></tr>';
-
-    const profile = filtered.find(user => profileKey(user) === selectedUserId);
-    renderUserProfile(profile);
   }
 
   function profileKey(user) {
     return String(MediPoint.getProfileId(user) || MediPoint.getPublicIdNumber(user) || user.email || user.name || 'unknown');
-  }
-
-  function renderUserProfile(user) {
-    const panel = document.getElementById('selectedUserProfile');
-    if(!panel) return;
-    if(!user) {
-      panel.innerHTML = '<p class="empty-monitor">Select a user to view their profile details.</p>';
-      return;
-    }
-
-    const records = recordsFor(user);
-    const latest = records[0] || null;
-    const latestResults = latest && Array.isArray(latest.results) ? latest.results : [];
-    const checkIn = latest && latest.date ? new Date(latest.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No check-in';
-    const status = statusFor(user);
-    const fields = [
-      ['Full name', user.name],
-      ['Role', user.role],
-      ['ID number', MediPoint.getPublicIdNumber(user)],
-      ['Date of birth', formatProfileDate(user.birthday || user.dob || user.birthDate)],
-      ['Gender', user.gender],
-      ['Email', user.email],
-      ['Mobile number', user.phone || user.mobile],
-      ['Program / department', user.program || user.departmentOffice || user.department || user.section],
-      ['Permanent barangay', user.barangay],
-      ['Permanent city / municipality', user.city || user.municipality],
-      ['Permanent province', user.province],
-      ['Present barangay', user.presentBarangay],
-      ['Present city / municipality', user.presentCity],
-      ['Present province', user.presentProvince],
-      ['Emergency contact', user.emergencyContact || user.emergencyContactName],
-      ['Relationship to emergency contact', user.guardianRelationship],
-      ['Emergency number', user.emergencyPhone],
-      ['Medical conditions', Array.isArray(user.medicalHistory) && user.medicalHistory.length ? user.medicalHistory.join(', ') : 'None reported'],
-      ['Other medical condition', user.otherMedicalHistory],
-      ['Previous surgeries', user.previousSurgeries],
-      ['Date of previous surgeries', user.previousSurgeryDate],
-      ['Current medications', user.currentMedications],
-      ['Known allergies', user.knownAllergies],
-      ['Registered kiosk', user.kiosk || user.registeredKiosk],
-      ['Member since', formatProfileDate(user.memberSince)]
-    ];
-    const profileFields = fields.map(([label, value]) => `<div class="user-profile-field"><span>${escape(label)}</span><strong>${escape(value || 'Not provided')}</strong></div>`).join('');
-    const resultMarkup = latestResults.length
-      ? latestResults.slice(0, 10).map(result => {
-        const value = String(result.value ?? 'Not recorded');
-        const unit = String(result.unit || '');
-        const displayValue = unit && value.toLowerCase().includes(unit.toLowerCase()) ? value : [value, unit].filter(Boolean).join(' ');
-        return `<div class="user-result-row"><strong>${escape(result.title || 'Assessment')}</strong><span>${escape(displayValue)}</span><small>${escape(result.status || '')}</small></div>`;
-      }).join('')
-      : '<p class="empty-monitor">No assessment results recorded.</p>';
-
-    panel.innerHTML = `
-      <div class="user-profile-heading">
-        <div><h3>${escape(user.name || 'Unknown user')}</h3><p>${escape(user.role || 'User')} · ${escape(MediPoint.getPublicIdNumber(user) || 'No ID')}</p></div>
-        <span class="status-pill ${status.toLowerCase().replace(' ', '-')}">${escape(status)}</span>
-      </div>
-      <div class="user-profile-grid">${profileFields}</div>
-      <section class="user-assessment-summary" aria-label="Latest assessment">
-        <div class="user-assessment-heading"><h3>Latest assessment</h3><span>${escape(checkIn)} · ${records.length} total</span></div>
-        <div class="user-result-list">${resultMarkup}</div>
-      </section>`;
-  }
-
-  function formatProfileDate(value) {
-    if(!value) return '';
-    const dateValue = String(value);
-    const date = new Date(/^\d{4}-\d{2}-\d{2}$/.test(dateValue) ? `${dateValue}T00:00:00` : dateValue);
-    return Number.isNaN(date.getTime()) ? dateValue : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
   const DAILY_TREND_DAYS = 14;
@@ -340,6 +272,102 @@
     if (lower === 'female' || lower === 'f') return 'Female';
     if (lower === 'other' || lower === 'non-binary' || lower === 'nonbinary') return 'Other';
     return raw.charAt(0).toUpperCase() + raw.slice(1);
+  }
+
+  function isPlausibleBmi(value) {
+    return Number.isFinite(value) && value >= 10 && value <= 60;
+  }
+
+  function extractBmiFromText(value) {
+    const text = String(value ?? '');
+    const labeled = text.match(/bmi\s*[:=]?\s*(-?\d+(?:\.\d+)?)/i);
+    if (labeled) {
+      const bmi = Number(labeled[1]);
+      if (isPlausibleBmi(bmi)) return bmi;
+    }
+    return null;
+  }
+
+  function extractBmiFromAssessment(record) {
+    if (!record) return null;
+
+    if (window.MediPointCareMate) {
+      const caremate = window.MediPointCareMate.extractCareMateFromAssessment(record);
+      const caremateBmi = Number(caremate && caremate.features && caremate.features.BMI);
+      if (isPlausibleBmi(caremateBmi)) return caremateBmi;
+    } else if (record.caremate && record.caremate.features) {
+      const caremateBmi = Number(record.caremate.features.BMI);
+      if (isPlausibleBmi(caremateBmi)) return caremateBmi;
+    }
+
+    const results = Array.isArray(record.results) ? record.results : [];
+    let heightCm = null;
+    let weightKg = null;
+
+    for (const result of results) {
+      const title = String(result.title || '').toLowerCase();
+      const value = String(result.value ?? '');
+      const unit = String(result.unit || '').toLowerCase();
+
+      const labeledBmi = extractBmiFromText(value) ?? extractBmiFromText(`${value} ${unit}`);
+      if (labeledBmi !== null) return labeledBmi;
+
+      if (title === 'bmi' || (title.includes('bmi') && !title.includes('weight') && !title.includes('height'))) {
+        const match = value.match(/(-?\d+(?:\.\d+)?)/);
+        if (match) {
+          const bmi = Number(match[1]);
+          if (isPlausibleBmi(bmi)) return bmi;
+        }
+      }
+
+      if (
+        (title.includes('height') && title.includes('weight')) ||
+        (title.includes('weight') && title.includes('bmi')) ||
+        (/cm/i.test(value) && /kg/i.test(value))
+      ) {
+        const fromCombined = extractBmiFromText(value);
+        if (fromCombined !== null) return fromCombined;
+      }
+
+      if (title === 'height' || (title.includes('height') && !title.includes('weight'))) {
+        const match = value.match(/([\d.]+)/);
+        if (match) heightCm = Number(match[1]);
+      }
+      if (title === 'weight' || (title.includes('weight') && !title.includes('bmi') && !title.includes('height'))) {
+        const match = value.match(/([\d.]+)/);
+        if (match) weightKg = Number(match[1]);
+      }
+      if (!heightCm) {
+        const heightMatch = value.match(/([\d.]+)\s*cm/i);
+        if (heightMatch) heightCm = Number(heightMatch[1]);
+      }
+      if (!weightKg) {
+        const weightMatch = value.match(/([\d.]+)\s*kg/i);
+        if (weightMatch) weightKg = Number(weightMatch[1]);
+      }
+    }
+
+    if (heightCm && weightKg && heightCm > 0) {
+      const computed = weightKg / ((heightCm / 100) ** 2);
+      const rounded = Math.round(computed * 10) / 10;
+      if (isPlausibleBmi(rounded)) return rounded;
+    }
+
+    return null;
+  }
+
+  function bmiCategoryFor(user, recordsForUser) {
+    const records = recordsForUser(user) || [];
+    let bmi = null;
+    for (const record of records) {
+      bmi = extractBmiFromAssessment(record);
+      if (bmi !== null) break;
+    }
+    if (bmi === null || Number.isNaN(bmi) || bmi <= 0) return 'No data';
+    if (bmi < 18.5) return 'Underweight';
+    if (bmi < 25) return 'Normal';
+    if (bmi < 30) return 'Overweight';
+    return 'Obese';
   }
 
   function dayKeyFromDate(value) {
@@ -465,11 +493,4 @@
 
   refreshData();
   const search=document.getElementById('userDirectorySearch'); if(search) search.addEventListener('input',event=>renderUsers(event.target.value));
-  const userRows = document.getElementById('userRows');
-  if(userRows) userRows.addEventListener('click', event => {
-    const button = event.target.closest('[data-user-id]');
-    if(!button) return;
-    selectedUserId = button.dataset.userId || '';
-    renderUsers(document.getElementById('userDirectorySearch')?.value || '');
-  });
 })();

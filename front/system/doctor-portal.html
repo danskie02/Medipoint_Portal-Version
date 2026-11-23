@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MediPoint - Clinical Staff Portal</title>
-  <link rel="stylesheet" href="system-base.css" />
-  <link rel="stylesheet" href="doctor-portal.css" />
+  <link rel="stylesheet" href="system-base.css?v=requests-icon" />
+  <link rel="stylesheet" href="doctor-portal.css?v=requests-summary" />
 </head>
 <body class="doctor-portal-page">
   <div class="portal-shell">
@@ -23,10 +23,11 @@
       </div>
 
       <nav class="side-nav">
-        <a href="doctor-portal.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg> Clinical Overview</a>
-        <a href="doctor-users.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#users"></use></svg> List of Users</a>
-        <a href="doctor-analytics.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#analytics"></use></svg> Analytics</a>
-        <a href="doctor-histogram.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#histogram"></use></svg> User Histogram</a>
+        <a href="doctor-portal.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#overview"></use></svg> Clinical Overview</a>
+        <a href="doctor-users.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#users"></use></svg> List of Users</a>
+        <a href="doctor-requests.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#requests"></use></svg> Clinic Requests</a>
+        <a href="doctor-analytics.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#analytics"></use></svg> Analytics</a>
+        <a href="doctor-histogram.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#histogram"></use></svg> User Histogram</a>
       </nav>
 
       <div class="side-footer">
@@ -83,17 +84,25 @@
           </article>
         </section>
 
-        <section class="panel clinic-request-queue" aria-labelledby="clinicRequestQueueHeading">
-          <div class="section-heading">
-            <div>
-              <h2 id="clinicRequestQueueHeading">Clinic Requests</h2>
-              <p>Review messages, scheduling preferences, and clinic follow-up status.</p>
+        <section class="panel clinic-request-summary-panel" aria-labelledby="clinicRequestSummaryHeading">
+          <a href="doctor-requests.html" class="clinic-request-summary" id="clinicRequestSummary" aria-live="polite">
+            <div class="clinic-request-summary-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 8 9 6 9-6"></path>
+              </svg>
             </div>
-            <small class="local-save-notice">Request updates are saved in this browser.</small>
-          </div>
-          <div id="doctorClinicRequestList" class="doctor-clinic-request-list" aria-live="polite">
-            <p class="empty">No clinic requests have been submitted.</p>
-          </div>
+            <div class="clinic-request-summary-copy">
+              <p>Clinic Requests</p>
+              <h2 id="clinicRequestSummaryHeading">Checking for new requests…</h2>
+              <span id="clinicRequestSummaryMeta">Open the requests tab to review messages and follow-up status.</span>
+            </div>
+            <div class="clinic-request-summary-action">
+              <strong id="clinicRequestSummaryCount">0</strong>
+              <small>New</small>
+              <em>View requests</em>
+            </div>
+          </a>
         </section>
 
         <section class="content-grid">
@@ -153,9 +162,9 @@
     </div>
   </div>
 
-  <script src="../shared.js"></script>
+  <script src="../shared.js?v=no-timeline"></script>
   <script src="../login-pages/medipoint-config.js"></script>
-  <script src="../caremate.js"></script>
-  <script src="doctor-portal.js"></script>
+  <script src="../caremate.js?v=no-timeline"></script>
+  <script src="doctor-portal.js?v=clinic-requests-tab"></script>
 </body>
 </html>

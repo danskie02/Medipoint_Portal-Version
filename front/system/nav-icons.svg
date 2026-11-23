@@ -23,4 +23,8 @@
   <symbol id="histogram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3 20V9h4v11M10 20V4h4v16M17 20v-8h4v8M2 20h20"/>
   </symbol>
+  <symbol id="requests" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="2"/>
+    <path d="m3 8 9 6 9-6"/>
+  </symbol>
 </svg>

@@ -23,19 +23,23 @@
         </div>
         <nav class="side-nav">
           <a href="doctor-portal.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#overview"></use></svg>
             Clinical Overview
           </a>
           <a href="doctor-users.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#users"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#users"></use></svg>
             List of Users
           </a>
+          <a href="doctor-requests.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#requests"></use></svg>
+            Clinic Requests
+          </a>
           <a href="doctor-analytics.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#analytics"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#analytics"></use></svg>
             Analytics
           </a>
           <a href="doctor-histogram.html" class="active">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#histogram"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#histogram"></use></svg>
             User Histogram
           </a>
         </nav>
@@ -87,17 +91,10 @@
             <div class="histogram compact-histogram" id="collegeHistogram" aria-label="Histogram showing registered users by college or department">
             </div>
           </section>
-          <section class="analytics-grid">
-            <article class="monitor-panel">
-              <h2>Users by Gender</h2>
-              <p>Demographic split from registration profiles.</p>
-              <div id="genderHistogramMetrics"></div>
-            </article>
-            <article class="monitor-panel">
-              <h2>Users by Province</h2>
-              <p>Top provinces from permanent address records.</p>
-              <div class="histogram compact-histogram" id="provinceHistogram" aria-label="Histogram showing registered users by province"></div>
-            </article>
+          <section class="monitor-panel">
+            <h2>Users by Gender</h2>
+            <p>Demographic split from registration profiles.</p>
+            <div id="genderHistogramMetrics"></div>
           </section>
           <section class="monitor-panel">
             <h2>Summary Insights</h2>
@@ -106,7 +103,7 @@
           </section>
           <section class="monitor-panel">
             <h2>How to read this chart</h2>
-            <p>Each bar represents the number of registered users in an age range, academic grouping, gender, or location. “Unknown” includes records without a valid birthday, program, gender, or address designation.</p>
+            <p>Each bar represents the number of registered users in an age range, academic grouping, or gender. “Unknown” includes records without a valid birthday, program, or gender designation.</p>
           </section>
         </main>
       </div>
@@ -114,7 +111,7 @@
     <script src="../shared.js">
     </script>
     <script src="../login-pages/medipoint-config.js"></script>
-    <script src="doctor-monitoring.js">
-    </script>
+    <script src="../caremate.js?v=bmi-from-assessments"></script>
+    <script src="doctor-monitoring.js?v=bmi-from-assessments"></script>
   </body>
 </html>

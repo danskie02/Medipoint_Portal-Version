@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -23,19 +23,23 @@
         </div>
         <nav class="side-nav">
           <a href="doctor-portal.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#overview"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#overview"></use></svg>
             Clinical Overview
           </a>
           <a href="doctor-users.html" class="active">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#users"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#users"></use></svg>
             List of Users
           </a>
+          <a href="doctor-requests.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#requests"></use></svg>
+            Clinic Requests
+          </a>
           <a href="doctor-analytics.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#analytics"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#analytics"></use></svg>
             Analytics
           </a>
           <a href="doctor-histogram.html">
-            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg#histogram"></use></svg>
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#histogram"></use></svg>
             User Histogram
           </a>
         </nav>
@@ -104,24 +108,11 @@
               </table>
             </div>
           </section>
-          <section class="monitor-panel user-profile-panel" aria-labelledby="selectedUserHeading" aria-live="polite">
-            <div class="monitor-toolbar">
-              <div>
-                <h2 id="selectedUserHeading">Selected user profile</h2>
-                <p>Personal information and the latest recorded assessment.</p>
-              </div>
-            </div>
-            <div id="selectedUserProfile" class="selected-user-profile">
-              <p class="empty-monitor">Select a user to view their profile details.</p>
-            </div>
-          </section>
         </main>
       </div>
     </div>
-    <script src="../shared.js">
-    </script>
+    <script src="../shared.js?v=profile-redirect"></script>
     <script src="../login-pages/medipoint-config.js"></script>
-    <script src="doctor-monitoring.js">
-    </script>
+    <script src="doctor-monitoring.js?v=profile-redirect"></script>
   </body>
 </html>

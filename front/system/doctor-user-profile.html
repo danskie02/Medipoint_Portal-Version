@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MediPoint - User Profile</title>
+    <link rel="stylesheet" href="system-base.css">
+    <link rel="stylesheet" href="doctor-portal.css">
+    <link rel="stylesheet" href="doctor-monitoring.css?v=select-style">
+  </head>
+  <body class="doctor-portal-page">
+    <div class="portal-shell">
+      <aside class="side-panel" aria-label="Clinical portal navigation">
+        <a href="doctor-portal.html" class="brand-block">
+          <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo">
+        </a>
+        <div class="side-user">
+          <div class="avatar" data-staff-initials>MD</div>
+          <div>
+            <strong data-staff-name>Clinical Staff</strong>
+            <span>Doctor</span>
+          </div>
+        </div>
+        <nav class="side-nav">
+          <a href="doctor-portal.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#overview"></use></svg>
+            Clinical Overview
+          </a>
+          <a href="doctor-users.html" class="active">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#users"></use></svg>
+            List of Users
+          </a>
+          <a href="doctor-requests.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#requests"></use></svg>
+            Clinic Requests
+          </a>
+          <a href="doctor-analytics.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#analytics"></use></svg>
+            Analytics
+          </a>
+          <a href="doctor-histogram.html">
+            <svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#histogram"></use></svg>
+            User Histogram
+          </a>
+        </nav>
+        <div class="side-footer">
+          <span>Privacy reminder</span>
+          <strong>Access patient records only for clinical purposes.</strong>
+        </div>
+      </aside>
+      <div class="portal-content">
+        <header class="portal-header">
+          <div>
+            <p>Clinical Monitoring</p>
+            <h1>User Profile</h1>
+          </div>
+          <div class="header-actions">
+            <span class="staff-badge">Staff-only workspace</span>
+            <span data-today>Today</span>
+            <a class="home-btn" href="doctor-users.html">Back to users</a>
+            <button class="home-btn" type="button" data-logout>Logout</button>
+          </div>
+        </header>
+        <main class="dashboard monitor-grid">
+          <section class="monitor-panel" aria-labelledby="profileHeading">
+            <div class="monitor-toolbar">
+              <div>
+                <h2 id="profileHeading">Profile details</h2>
+                <p>Registered personal information for clinical reference.</p>
+              </div>
+            </div>
+            <div id="userProfilePanel" class="selected-user-profile">
+              <p class="empty-monitor">Loading user profile…</p>
+            </div>
+          </section>
+          <section class="monitor-panel" aria-labelledby="assessmentsHeading">
+            <div class="monitor-toolbar profile-assessment-toolbar">
+              <div>
+                <h2 id="assessmentsHeading">Assessments</h2>
+                <p>Select a recorded assessment to review vitals and CareMate AI recommendations.</p>
+              </div>
+              <label class="assessment-select-label" for="assessmentSelect">
+                <span>Assessment date</span>
+                <span class="assessment-select-shell">
+                  <select id="assessmentSelect" disabled>
+                    <option value="">No assessments available</option>
+                  </select>
+                </span>
+              </label>
+            </div>
+            <div id="assessmentDetail" class="assessment-detail-panel">
+              <p class="empty-monitor">Select an assessment to view results and AI recommendations.</p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="../shared.js?v=profile-page"></script>
+    <script src="../login-pages/medipoint-config.js"></script>
+    <script src="../caremate.js?v=profile-page"></script>
+    <script src="doctor-user-profile.js?v=profile-page"></script>
+  </body>
+</html>

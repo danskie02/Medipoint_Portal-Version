@@ -115,6 +115,7 @@
    ========================================================= */
 
 .table-wrap {
+  max-height: min(75vh, 820px);
   overflow: auto;
 }
 
@@ -164,13 +165,187 @@
   background: none;
   color: #111827;
   text-align: left;
+  text-decoration: none;
   font-weight: 800;
+  cursor: pointer;
 }
 
 .user-select span {
   color: #b80f1d;
   font-size: 11px;
   font-weight: 700;
+}
+
+.user-select:hover span {
+  text-decoration: underline;
+}
+
+.profile-assessment-toolbar {
+  align-items: flex-end;
+}
+
+.assessment-select-label {
+  display: grid;
+  gap: 8px;
+  min-width: min(340px, 100%);
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.assessment-select-shell {
+  position: relative;
+  display: block;
+}
+
+.assessment-select-shell::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #b80f1d;
+  border-bottom: 2px solid #b80f1d;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.assessment-select-label select {
+  width: 100%;
+  min-height: 46px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 12px 44px 12px 16px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fff8f8 100%);
+  color: #111827;
+  border: 1px solid rgba(184, 15, 29, 0.22);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 8px 18px rgba(15, 23, 42, 0.05);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.assessment-select-label select:hover:not(:disabled) {
+  border-color: rgba(184, 15, 29, 0.45);
+  background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 22px rgba(184, 15, 29, 0.08);
+  transform: translateY(-1px);
+}
+
+.assessment-select-label select:focus {
+  border-color: #b80f1d;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 3px rgba(184, 15, 29, 0.14),
+    0 10px 22px rgba(184, 15, 29, 0.08);
+}
+
+.assessment-select-label select:disabled {
+  cursor: not-allowed;
+  color: #9ca3af;
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  box-shadow: none;
+}
+
+.assessment-select-shell:has(select:disabled)::after {
+  border-color: #9ca3af;
+}
+
+.assessment-detail-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-back-link {
+  color: #b80f1d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.profile-back-link:hover {
+  text-decoration: underline;
+}
+
+.caremate-panel {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.caremate-panel.caremate-normal {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.caremate-panel.caremate-warning {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.caremate-panel.caremate-critical {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.caremate-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.caremate-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.caremate-panel-heading h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.caremate-panel-heading p {
+  margin: 4px 0 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.caremate-panel .caremate-findings-panel {
+  margin-top: 0;
 }
 
 .selected-user-profile {
@@ -238,6 +413,8 @@
 .user-result-list {
   display: grid;
   gap: 8px;
+  max-height: min(60vh, 560px);
+  overflow-y: auto;
 }
 
 .user-result-row {
@@ -640,6 +817,16 @@
   }
 
   .monitor-toolbar input {
+    width: 100%;
+  }
+
+  .profile-assessment-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .assessment-select-label {
+    min-width: 0;
     width: 100%;
   }
 

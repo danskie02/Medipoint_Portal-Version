@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediPoint - Clinic Requests</title>
+  <link rel="stylesheet" href="system-base.css?v=requests-icon" />
+  <link rel="stylesheet" href="doctor-portal.css?v=requests-summary" />
+</head>
+<body class="doctor-portal-page">
+  <div class="portal-shell">
+    <aside class="side-panel" aria-label="Clinical portal navigation">
+      <a href="doctor-portal.html" class="brand-block">
+        <img src="../../images/MediPointLogo.png" alt="MediPoint Logo" class="logo" />
+      </a>
+
+      <div class="side-user">
+        <div class="avatar" id="staffInitials">DS</div>
+        <div>
+          <strong id="staffName">Clinical Staff</strong>
+          <span id="staffRole">Doctor / Staff</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="doctor-portal.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#overview"></use></svg> Clinical Overview</a>
+        <a href="doctor-users.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#users"></use></svg> List of Users</a>
+        <a href="doctor-requests.html" class="active"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#requests"></use></svg> Clinic Requests</a>
+        <a href="doctor-analytics.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#analytics"></use></svg> Analytics</a>
+        <a href="doctor-histogram.html"><svg class="nav-icon" aria-hidden="true"><use href="nav-icons.svg?v=2#histogram"></use></svg> User Histogram</a>
+      </nav>
+
+      <div class="side-footer">
+        <span>Request handling</span>
+        <strong>Update request status so users can track clinic follow-up.</strong>
+      </div>
+    </aside>
+
+    <div class="portal-content">
+      <header class="portal-header">
+        <div>
+          <p>Clinical Operations</p>
+          <h1>Clinic Requests</h1>
+        </div>
+        <div class="header-actions">
+          <span class="staff-badge">Staff-only workspace</span>
+          <span id="todayStamp">Today</span>
+          <button type="button" class="home-btn" id="staffLogoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="stats-grid request-stats-grid">
+          <article class="stat-card">
+            <span>Total requests</span>
+            <strong id="totalRequests">0</strong>
+          </article>
+          <article class="stat-card warning">
+            <span>New</span>
+            <strong id="newRequests">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>In progress</span>
+            <strong id="openRequests">0</strong>
+          </article>
+          <article class="stat-card normal">
+            <span>Resolved</span>
+            <strong id="resolvedRequests">0</strong>
+          </article>
+        </section>
+
+        <section class="panel clinic-request-queue" aria-labelledby="clinicRequestQueueHeading">
+          <div class="section-heading">
+            <div>
+              <h2 id="clinicRequestQueueHeading">Clinic Requests</h2>
+              <p>Review messages, scheduling preferences, and clinic follow-up status.</p>
+            </div>
+            <small class="local-save-notice">Request updates are saved in this browser.</small>
+          </div>
+          <div id="doctorClinicRequestList" class="doctor-clinic-request-list" aria-live="polite">
+            <p class="empty">No clinic requests have been submitted.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../shared.js?v=clinic-requests-tab"></script>
+  <script src="../login-pages/medipoint-config.js"></script>
+  <script src="doctor-requests.js?v=clinic-requests-tab"></script>
+</body>
+</html>

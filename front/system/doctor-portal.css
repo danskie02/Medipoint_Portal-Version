@@ -169,6 +169,170 @@
        min-width:0;
 }
 
+ .clinic-request-summary-panel {
+       padding:0;
+       overflow:hidden;
+}
+
+ .clinic-request-summary,
+ .clinic-request-summary:link,
+ .clinic-request-summary:visited,
+ .clinic-request-summary:hover,
+ .clinic-request-summary:active {
+       display:grid;
+       grid-template-columns:auto minmax(0,1fr) auto;
+       gap:16px;
+       align-items:center;
+       padding:18px 20px;
+       text-decoration:none !important;
+       color:#111827;
+       background:linear-gradient(135deg, #ffffff 0%, #fff7f7 100%);
+       border:1px solid rgba(184, 15, 29, 0.14);
+       border-radius:14px;
+       box-shadow:none;
+       transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease, background .18s ease;
+}
+
+ .clinic-request-summary:hover {
+       border-color:rgba(184, 15, 29, 0.35);
+       box-shadow:0 12px 24px rgba(184, 15, 29, 0.08);
+       transform:translateY(-1px);
+}
+
+ .clinic-request-summary.has-new {
+       background:linear-gradient(135deg, #fff1f2 0%, #ffffff 58%);
+       border-color:rgba(184, 15, 29, 0.28);
+}
+
+ .clinic-request-summary-icon {
+       width:52px;
+       height:52px;
+       display:grid;
+       place-items:center;
+       border-radius:14px;
+       background:#111827;
+       color:#fff;
+       flex:0 0 auto;
+}
+
+ .clinic-request-summary.has-new .clinic-request-summary-icon {
+       background:var(--brand);
+}
+
+ .clinic-request-summary-icon svg {
+       width:24px;
+       height:24px;
+       display:block;
+}
+
+ .clinic-request-summary-copy {
+       min-width:0;
+}
+
+ .clinic-request-summary-copy p,
+ .clinic-request-summary-copy h2,
+ .clinic-request-summary-copy span,
+ .clinic-request-summary-action,
+ .clinic-request-summary-action * {
+       text-decoration:none !important;
+}
+
+ .clinic-request-summary-copy p {
+       margin:0 0 4px;
+       color:var(--brand);
+       font-size:11px;
+       font-weight:800;
+       letter-spacing:.06em;
+       text-transform:uppercase;
+}
+
+ .clinic-request-summary-copy h2 {
+       margin:0;
+       color:#111827;
+       font-size:20px;
+       font-weight:900;
+       line-height:1.25;
+}
+
+ .clinic-request-summary-copy span {
+       display:block;
+       margin-top:6px;
+       color:var(--muted);
+       font-size:13px;
+       font-style:normal;
+       line-height:1.45;
+}
+
+ .clinic-request-summary-action {
+       min-width:118px;
+       display:grid;
+       justify-items:center;
+       align-content:center;
+       gap:2px;
+       padding:12px 14px;
+       border-radius:12px;
+       background:#111827;
+       color:#fff;
+       text-align:center;
+}
+
+ .clinic-request-summary.has-new .clinic-request-summary-action {
+       background:var(--brand);
+}
+
+ .clinic-request-summary-action strong {
+       font-size:28px;
+       font-weight:900;
+       line-height:1;
+}
+
+ .clinic-request-summary-action small {
+       color:rgba(255,255,255,.78);
+       font-size:10px;
+       font-weight:800;
+       letter-spacing:.06em;
+       text-transform:uppercase;
+}
+
+ .clinic-request-summary-action em {
+       margin-top:6px;
+       font-size:12px;
+       font-style:normal;
+       font-weight:700;
+}
+
+ .doctor-request-table tr.request-row-new {
+       background:#fff7f7;
+}
+
+ .request-stats-grid {
+       margin-bottom:0;
+}
+
+ @media (max-width: 720px) {
+       .clinic-request-summary,
+       .clinic-request-summary:link,
+       .clinic-request-summary:visited,
+       .clinic-request-summary:hover,
+       .clinic-request-summary:active {
+             grid-template-columns:auto minmax(0,1fr);
+       }
+
+       .clinic-request-summary-action {
+             grid-column:1 / -1;
+             min-width:0;
+             justify-items:start;
+             grid-template-columns:auto auto 1fr;
+             align-items:center;
+             gap:8px 10px;
+       }
+
+       .clinic-request-summary-action em {
+             margin-top:0;
+             justify-self:end;
+       }
+}
+
  .doctor-request-update {
        display:grid;
        grid-template-columns:repeat(3,minmax(0,1fr)) auto;
@@ -304,6 +468,8 @@
  .patient-list {
        display:grid;
        gap:10px;
+       max-height:min(60vh,560px);
+       overflow-y:auto;
 }
 
  .patient-item {
@@ -475,6 +641,8 @@
        gap:12px;
        border-top:1px solid var(--line);
        padding-top:16px;
+       max-height:min(60vh,560px);
+       overflow-y:auto;
 }
 
  .case-timeline > h3 {
