@@ -136,6 +136,14 @@
   font-size: 13px;
 }
 
+.user-table .user-row-number {
+  width: 3rem;
+  text-align: center;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .user-table th {
   color: #6b7280;
 

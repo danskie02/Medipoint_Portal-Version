@@ -266,7 +266,7 @@
       const collegeOrDept = collegeLabel(user);
       return `${user.name || ''} ${MediPoint.getPublicIdNumber(user)} ${user.role || ''} ${user.email || ''} ${collegeOrDept}`.toLowerCase().includes(query);
     });
-    body.innerHTML = filtered.length ? filtered.map(user => {
+    body.innerHTML = filtered.length ? filtered.map((user, index) => {
       const records = recordsFor(user);
       const status = statusFor(user);
       const latest = records[0];
@@ -274,8 +274,8 @@
       const key = profileKey(user);
       const profileUrl = `doctor-user-profile.html?user=${encodeURIComponent(key)}`;
       const collegeOrDept = collegeLabel(user);
-      return `<tr><td><a class="user-select" href="${escape(profileUrl)}">${escape(user.name || 'Unknown')}<span>View profile</span></a></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(collegeOrDept)}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
-    }).join('') : '<tr><td colspan="7" class="empty-monitor">No users match this search.</td></tr>';
+      return `<tr><td class="user-row-number">${index + 1}</td><td><a class="user-select" href="${escape(profileUrl)}">${escape(user.name || 'Unknown')}<span>View profile</span></a></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(collegeOrDept)}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
+    }).join('') : '<tr><td colspan="8" class="empty-monitor">No users match this search.</td></tr>';
   }
 
   function profileKey(user) {
