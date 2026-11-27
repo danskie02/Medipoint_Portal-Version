@@ -19,8 +19,8 @@
   const authCard = document.querySelector('.auth-card');
   let newlyCreatedUser = null;
   let pendingPasswordChange = null;
-  const studentOptions = ['BS Computer Engineering','BS Civil Engineering','BS Electrical Engineering','BS Electronics Engineering','BS Mechanical Engineering','BS Information Technology','BS Information Systems','BS Computing Science','BS Criminology','BS Environmental Science','BS Midwifery','BS Nursing'];
-  const personnelOptions = ['Clinic','Registrar','Accounting Office','Guidance Office','IT Department','Engineering Department','Nursing Department','Security Office','Library','Administration Office'];
+  const studentOptions = (window.MediPoint && MediPoint.STUDENT_COLLEGES) || [];
+  const personnelOptions = (window.MediPoint && MediPoint.PERSONNEL_DEPARTMENTS) || [];
 
   MediPoint.ensureClinicalAccount();
 
@@ -353,7 +353,7 @@
       gender: String(data.get('gender') || ''),
       profileComplete: false,
       memberSince: new Date().toISOString(),
-      program: selectedRole === 'student' ? String(data.get('department') || '') : '',
+      program: selectedRole === 'student' ? MediPoint.normalizeStudentCollege(data.get('department')) : '',
       departmentOffice: selectedRole !== 'student' ? String(data.get('department') || '') : ''
     };
 
@@ -428,9 +428,9 @@
   function updateRoleFields(role) {
     const isStudent = role === 'student';
     const options = isStudent ? studentOptions : personnelOptions;
-    departmentLabel.textContent = isStudent ? 'Program' : 'Department / Office';
+    departmentLabel.textContent = isStudent ? 'College' : 'Department / Office';
     signupIdLabel.textContent = isStudent ? 'Student Number' : role === 'doctor' ? 'Doctor ID' : 'Personnel ID';
-    department.innerHTML = `<option value="" selected disabled>Select your ${isStudent ? 'program' : 'department / office'}</option>` +
+    department.innerHTML = `<option value="" selected disabled>Select your ${isStudent ? 'college' : 'department / office'}</option>` +
       options.map(option => `<option value="${option}">${option}</option>`).join('');
   }
 

@@ -12,6 +12,55 @@
     role: 'doctor'
   });
 
+  const STUDENT_COLLEGES = Object.freeze([
+    'COLLEGE OF AGRICULTURE',
+    'COLLEGE OF ENVIRONMENTAL STUDIES',
+    'COLLEGE OF GOVERNANCE',
+    'COLLEGE OF BUSINESS AND ACCOUNTANCY',
+    'COLLEGE OF ALLIED HEALTH SCIENCES',
+    'COLLEGE OF INDUSTRIAL TECHNOLOGY',
+    'COLLEGE OF INFORMATION AND COMPUTING SCIENCES',
+    'COLLEGE OF ENGINEERING',
+    'COLLEGE OF FISHERIES AND AQUATIC SCIENCES',
+    'COLLEGE OF CRIMINAL JUSTICE EDUCATION',
+    'COLLEGE OF EDUCATION',
+    'COLLEGE OF ARTS AND SOCIAL SCIENCES',
+  ]);
+
+  const PERSONNEL_DEPARTMENTS = Object.freeze([
+    'Clinic',
+    'Registrar',
+    'Accounting Office',
+    'Guidance Office',
+    'IT Department',
+    'Engineering Department',
+    'Nursing Department',
+    'Security Office',
+    'Library',
+    'Administration Office',
+  ]);
+
+  const LEGACY_PROGRAM_TO_COLLEGE = Object.freeze({
+    'BS Computer Engineering': 'COLLEGE OF ENGINEERING',
+    'BS Civil Engineering': 'COLLEGE OF ENGINEERING',
+    'BS Electrical Engineering': 'COLLEGE OF ENGINEERING',
+    'BS Electronics Engineering': 'COLLEGE OF ENGINEERING',
+    'BS Mechanical Engineering': 'COLLEGE OF ENGINEERING',
+    'BS Information Technology': 'COLLEGE OF INFORMATION AND COMPUTING SCIENCES',
+    'BS Information Systems': 'COLLEGE OF INFORMATION AND COMPUTING SCIENCES',
+    'BS Computing Science': 'COLLEGE OF INFORMATION AND COMPUTING SCIENCES',
+    'BS Criminology': 'COLLEGE OF CRIMINAL JUSTICE EDUCATION',
+    'BS Environmental Science': 'COLLEGE OF ENVIRONMENTAL STUDIES',
+    'BS Midwifery': 'COLLEGE OF ALLIED HEALTH SCIENCES',
+    'BS Nursing': 'COLLEGE OF ALLIED HEALTH SCIENCES',
+  });
+
+  function normalizeStudentCollege(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    return LEGACY_PROGRAM_TO_COLLEGE[raw] || raw;
+  }
+
   function parseJSON(value, fallback) {
     if(value === null || value === undefined || value === '') return fallback;
 
@@ -561,7 +610,7 @@
         type: 'assessment',
         date,
         source: record.source || (simulated ? 'Kiosk · simulated demo' : 'MediPoint kiosk'),
-        context: String(record.context || record.program || ''),
+        context: String(normalizeStudentCollege(record.context || record.program) || record.context || ''),
         readings,
         simulated
       };
@@ -616,7 +665,7 @@
     const record = {
       userId: id,
       user: user.name || 'Unknown User',
-      program: user.program || user.departmentOffice || 'Not specified',
+      program: normalizeStudentCollege(user.program) || user.departmentOffice || 'Not specified',
       date: assessment.date || new Date().toISOString(),
       results,
       caremate
@@ -778,6 +827,9 @@
     escapeHTML,
     showPortalDetailDialog,
     getKioskQrPayload,
-    routeFor
+    routeFor,
+    STUDENT_COLLEGES,
+    PERSONNEL_DEPARTMENTS,
+    normalizeStudentCollege,
   };
 })();

@@ -178,7 +178,7 @@ function renderUserDetails(){
   setText(pPreviousSurgeryDate, user.previousSurgeryDate || 'Not available');
   setText(pCurrentMedications, user.currentMedications || 'Not available');
   setText(pKnownAllergies, user.knownAllergies || 'Not available');
-  setText(pDept, user.program || user.departmentOffice || user.department || user.section || 'Not available');
+  setText(pDept, MediPoint.normalizeStudentCollege(user.program) || user.departmentOffice || user.department || user.section || 'Not available');
   setText(pKiosk, user.kiosk || user.registeredKiosk || 'Not available');
 }
 
@@ -751,7 +751,7 @@ function renderPersonalAnalyticsSnapshot(){
   setText(ageNode, age != null ? String(age) : '--');
   setText(document.getElementById('snapshotAgeNote'), age != null ? 'From date of birth' : 'Add birthday in profile');
   setText(document.getElementById('snapshotGender'), user.gender || 'Not provided');
-  setText(document.getElementById('snapshotProgram'), user.program || user.departmentOffice || user.department || user.section || 'Not provided');
+  setText(document.getElementById('snapshotProgram'), MediPoint.normalizeStudentCollege(user.program) || user.departmentOffice || user.department || user.section || 'Not provided');
   setText(document.getElementById('snapshotLocation'), location);
 }
 
@@ -945,7 +945,7 @@ function getHistoryDetailMarkup(event){
 
   if(event.type === 'assessment'){
     facts.push(['Source', event.source || 'MediPoint kiosk']);
-    if(event.context) facts.push(['Program / department', event.context]);
+    if(event.context) facts.push(['College / department', event.context]);
     const readings = event.readings.length ? event.readings.map(reading => `
       <article class="portal-detail-reading">
         <div><strong>${MediPoint.escapeHTML(reading.title)}</strong><span class="portal-status-pill ${getStatusClass(reading.status)}">${MediPoint.escapeHTML(getDisplayStatus(reading.status))}</span></div>
@@ -1330,15 +1330,53 @@ function setupMobilePortalNav(){
   brand.insertAdjacentElement('afterend', toggle);
 }
 
+function fillDepartmentOptions(role, selectedValue){
+  const departmentField = document.getElementById('setupDepartment');
+  const departmentLabel = document.getElementById('setupDepartmentLabel');
+  if(!departmentField){
+    return;
+  }
+
+  const isStudent = normalizeRole(role) === 'student';
+  const options = isStudent
+    ? (MediPoint.STUDENT_COLLEGES || [])
+    : (MediPoint.PERSONNEL_DEPARTMENTS || []);
+  const selected = isStudent
+    ? MediPoint.normalizeStudentCollege(selectedValue)
+    : String(selectedValue || '').trim();
+
+  if(departmentLabel){
+    departmentLabel.textContent = isStudent ? 'College *' : 'Department / Office *';
+  }
+
+  departmentField.innerHTML =
+    `<option value="" selected disabled>Select your ${isStudent ? 'college' : 'department / office'}</option>` +
+    options.map(option => `<option value="${option}">${option}</option>`).join('');
+
+  if(selected && options.includes(selected)){
+    departmentField.value = selected;
+  }else if(selected){
+    const legacy = document.createElement('option');
+    legacy.value = selected;
+    legacy.textContent = selected;
+    departmentField.appendChild(legacy);
+    departmentField.value = selected;
+  }
+}
+
 function fillUserInfoForm(){
   if(!userInfoForm){
     return;
   }
 
+  const role = normalizeRole(user.role);
+  const departmentValue = user.program || user.departmentOffice || user.department || user.section || '';
+  fillDepartmentOptions(role, departmentValue);
+
   const fields = {
     setupName: user.name || '',
-    setupRole: normalizeRole(user.role),
-    setupRoleValue: normalizeRole(user.role),
+    setupRole: role,
+    setupRoleValue: role,
     setupId: MediPoint.getPublicIdNumber(user) || '',
     setupEmail: user.email || '',
     setupBirthday: user.birthday || user.dob || user.birthDate || '',
@@ -1357,8 +1395,7 @@ function fillUserInfoForm(){
     previousSurgeries: user.previousSurgeries || '',
     previousSurgeryDate: user.previousSurgeryDate || '',
     currentMedications: user.currentMedications || '',
-    knownAllergies: user.knownAllergies || '',
-    setupDepartment: user.program || user.departmentOffice || user.department || user.section || ''
+    knownAllergies: user.knownAllergies || ''
   };
 
   Object.entries(fields).forEach(([id, value]) => {
@@ -1473,7 +1510,7 @@ async function submitUserInfo(event){
     previousSurgeryDate: String(formData.get('previousSurgeryDate') || '').trim(),
     currentMedications: String(formData.get('currentMedications') || '').trim(),
     knownAllergies: String(formData.get('knownAllergies') || '').trim(),
-    program: role === 'student' ? String(formData.get('department') || '').trim() : '',
+    program: role === 'student' ? MediPoint.normalizeStudentCollege(formData.get('department')) : '',
     departmentOffice: role !== 'student' ? String(formData.get('department') || '').trim() : '',
     profileComplete: true,
     memberSince: user.memberSince || new Date().toISOString()

@@ -40,12 +40,30 @@
 
   async function fetchAssessmentsFor(profile) {
     const idNumber = MediPoint.getPublicIdNumber(profile) || '';
-    const remoteAssessments = await MediPoint.fetchAssessmentsFromDatabase(profile);
-    if (remoteAssessments !== null) {
-      return remoteAssessments;
+    try {
+      const remoteAssessments = await Promise.race([
+        MediPoint.fetchAssessmentsFromDatabase(profile),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Assessment fetch timed out')), 8000)),
+      ]);
+      if (remoteAssessments !== null) {
+        return remoteAssessments;
+      }
+    } catch (error) {
+      console.warn('Unable to load assessments for profile.', error);
     }
 
     return MediPoint.getMeasurements(idNumber || profile.email || 'guest');
+  }
+
+  function collegeLabel(user) {
+    const normalize = typeof MediPoint.normalizeStudentCollege === 'function'
+      ? MediPoint.normalizeStudentCollege
+      : (value) => String(value || '').trim();
+    return String(
+      normalize(user && user.program) ||
+      (user && (user.departmentOffice || user.department || user.section)) ||
+      'Unspecified'
+    ).trim() || 'Unspecified';
   }
 
   let profiles = MediPoint.getUsers().filter(user => user.role === 'student' || user.role === 'personnel');
@@ -76,25 +94,10 @@
     window.location.href = '../login-pages/portal-auth.html';
   }));
 
-  async function refreshData() {
-    const latestProfiles = await fetchDoctorProfiles();
-    latestProfiles.forEach((profile) => {
-      const publicId = MediPoint.getPublicIdNumber(profile);
-      if (publicId) {
-        profile.idNumber = publicId;
-      }
-    });
-
-    const enrichedProfiles = await Promise.all(latestProfiles.map(async (profile) => ({
-      ...profile,
-      assessments: await fetchAssessmentsFor(profile),
-    })));
-
-    profiles = enrichedProfiles.length ? enrichedProfiles : profiles.map(profile => ({ ...profile, assessments: MediPoint.getMeasurements(MediPoint.getPublicIdNumber(profile)) }));
-    const liveProfiles = profiles;
-    const liveRecords = user => Array.isArray(user.assessments) ? user.assessments : [];
+  function renderPopulationCharts(liveProfiles, liveRecords) {
+    const recordsForUser = liveRecords || (() => []);
     const liveStatusFor = user => {
-      const results = (liveRecords(user)[0] || { results: [] }).results || [];
+      const results = (recordsForUser(user)[0] || { results: [] }).results || [];
       if (!results.length) return 'No data';
       const statuses = results.map(item => String(item.status || '').toLowerCase());
       if (statuses.some(value => /critical|high|fever/.test(value))) return 'Critical';
@@ -102,8 +105,8 @@
       return 'Normal';
     };
 
-    const assessments = liveProfiles.reduce((total, user) => total + liveRecords(user).length, 0);
-    const active = liveProfiles.filter(user => liveRecords(user).length).length;
+    const assessments = liveProfiles.reduce((total, user) => total + recordsForUser(user).length, 0);
+    const active = liveProfiles.filter(user => recordsForUser(user).length).length;
     const urgent = liveProfiles.filter(user => liveStatusFor(user) === 'Critical').length;
     const values = { totalUsers: liveProfiles.length, totalAssessments: assessments, activeUsers: active, urgentUsers: urgent };
     Object.entries(values).forEach(([id, value]) => { const node = document.getElementById(id); if (node) node.textContent = value; });
@@ -143,27 +146,23 @@
 
     const collegeCounts = {};
     liveProfiles.forEach(user => {
-      const college = String(user.program || user.departmentOffice || user.department || user.section || 'Unspecified').trim();
-      if (!college) {
-        collegeCounts['Unspecified'] = (collegeCounts['Unspecified'] || 0) + 1;
-        return;
-      }
+      const college = collegeLabel(user);
       collegeCounts[college] = (collegeCounts[college] || 0) + 1;
     });
 
     const chart = document.getElementById('ageHistogram');
     if (chart) {
       const buckets = [{ label: 'Under 18', min: 0, max: 17 }, { label: '18–20', min: 18, max: 20 }, { label: '21–25', min: 21, max: 25 }, { label: '26–35', min: 26, max: 35 }, { label: '36–50', min: 36, max: 50 }, { label: '51+', min: 51, max: 200 }, { label: 'Unknown', unknown: true }];
-      const values = buckets.map(bucket => ({ ...bucket, value: liveProfiles.filter(user => { const age = ageOf(user); return bucket.unknown ? age === null : age !== null && age >= bucket.min && age <= bucket.max; }).length }));
-      const max = Math.max(1, ...values.map(item => item.value));
-      chart.innerHTML = values.map(item => `<div class="histogram-column"><span class="histogram-value">${item.value}</span><div class="histogram-bar" style="height:${Math.max(3, (item.value / max) * 240)}px"></div><span class="histogram-label">${item.label}</span></div>`).join('');
+      const bucketValues = buckets.map(bucket => ({ ...bucket, value: liveProfiles.filter(user => { const age = ageOf(user); return bucket.unknown ? age === null : age !== null && age >= bucket.min && age <= bucket.max; }).length }));
+      const max = Math.max(1, ...bucketValues.map(item => item.value));
+      chart.innerHTML = bucketValues.map(item => `<div class="histogram-column"><span class="histogram-value">${item.value}</span><div class="histogram-bar" style="height:${Math.max(3, (item.value / max) * 240)}px"></div><span class="histogram-label">${item.label}</span></div>`).join('');
     }
 
     const collegeChart = document.getElementById('collegeHistogram');
     if (collegeChart) {
       const items = Object.entries(collegeCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 6)
+        .slice(0, 12)
         .map(([label, value]) => ({ label, value }));
 
       const maxCollege = Math.max(1, ...items.map(item => item.value));
@@ -191,11 +190,11 @@
         : '<p class="empty-monitor">No BMI data available.</p>';
     }
 
-    renderClinicDailyTrends(liveProfiles, liveRecords);
+    renderClinicDailyTrends(liveProfiles, recordsForUser);
 
     const summaryContainer = document.getElementById('summaryInsights');
     if (summaryContainer) {
-      const usersWithAssessments = liveProfiles.filter(user => liveRecords(user).length).length;
+      const usersWithAssessments = liveProfiles.filter(user => recordsForUser(user).length).length;
       const usersWithoutAssessments = liveProfiles.length - usersWithAssessments;
       const completionRate = liveProfiles.length ? Math.round((liveProfiles.filter(user => user.profileComplete).length / liveProfiles.length) * 100) : 0;
       const topCollege = Object.entries(collegeCounts).sort((a, b) => b[1] - a[1])[0] || ['Unspecified', 0];
@@ -221,6 +220,36 @@
     }
   }
 
+  async function refreshData() {
+    try {
+      const latestProfiles = await fetchDoctorProfiles();
+      latestProfiles.forEach((profile) => {
+        const publicId = MediPoint.getPublicIdNumber(profile);
+        if (publicId) {
+          profile.idNumber = publicId;
+        }
+      });
+
+      profiles = latestProfiles.length
+        ? latestProfiles.map(profile => ({ ...profile, assessments: [] }))
+        : profiles.map(profile => ({ ...profile, assessments: MediPoint.getMeasurements(MediPoint.getPublicIdNumber(profile)) }));
+      renderPopulationCharts(profiles, () => []);
+
+      const enrichedProfiles = await Promise.all(latestProfiles.map(async (profile) => ({
+        ...profile,
+        assessments: await fetchAssessmentsFor(profile),
+      })));
+
+      profiles = enrichedProfiles.length
+        ? enrichedProfiles
+        : profiles.map(profile => ({ ...profile, assessments: MediPoint.getMeasurements(MediPoint.getPublicIdNumber(profile)) }));
+      renderPopulationCharts(profiles, user => Array.isArray(user.assessments) ? user.assessments : []);
+    } catch (error) {
+      console.warn('Unable to refresh doctor monitoring charts.', error);
+      renderPopulationCharts(profiles, user => Array.isArray(user.assessments) ? user.assessments : recordsFor(user));
+    }
+  }
+
   function renderStats() {
     const assessments = profiles.reduce((total,user) => total + recordsFor(user).length,0);
     const active = profiles.filter(user => recordsFor(user).length).length;
@@ -233,7 +262,10 @@
     const body = document.getElementById('userRows');
     if(!body) return;
     const query = String(search || '').trim().toLowerCase();
-    const filtered = profiles.filter(user => `${user.name || ''} ${MediPoint.getPublicIdNumber(user)} ${user.role || ''} ${user.email || ''} ${user.program || user.departmentOffice || ''}`.toLowerCase().includes(query));
+    const filtered = profiles.filter(user => {
+      const collegeOrDept = collegeLabel(user);
+      return `${user.name || ''} ${MediPoint.getPublicIdNumber(user)} ${user.role || ''} ${user.email || ''} ${collegeOrDept}`.toLowerCase().includes(query);
+    });
     body.innerHTML = filtered.length ? filtered.map(user => {
       const records = recordsFor(user);
       const status = statusFor(user);
@@ -241,7 +273,8 @@
       const dateText = latest && latest.date ? new Date(latest.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No check-in';
       const key = profileKey(user);
       const profileUrl = `doctor-user-profile.html?user=${encodeURIComponent(key)}`;
-      return `<tr><td><a class="user-select" href="${escape(profileUrl)}">${escape(user.name || 'Unknown')}<span>View profile</span></a></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(user.program || user.departmentOffice || 'Not specified')}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
+      const collegeOrDept = collegeLabel(user);
+      return `<tr><td><a class="user-select" href="${escape(profileUrl)}">${escape(user.name || 'Unknown')}<span>View profile</span></a></td><td>${escape(MediPoint.getPublicIdNumber(user) || '—')}</td><td>${escape(user.role || '—')}</td><td>${escape(collegeOrDept)}</td><td>${records.length}</td><td>${escape(dateText)}</td><td><span class="status-pill ${status.toLowerCase().replace(' ','-')}">${status}</span></td></tr>`;
     }).join('') : '<tr><td colspan="7" class="empty-monitor">No users match this search.</td></tr>';
   }
 

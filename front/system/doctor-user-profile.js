@@ -170,7 +170,7 @@
       ['Gender', user.gender],
       ['Email', user.email],
       ['Mobile number', user.phone || user.mobile],
-      ['Program / department', user.program || user.departmentOffice || user.department || user.section],
+      ['College / department', MediPoint.normalizeStudentCollege(user.program) || user.departmentOffice || user.department || user.section],
       ['Permanent barangay', user.barangay],
       ['Permanent city / municipality', user.city || user.municipality],
       ['Permanent province', user.province],
